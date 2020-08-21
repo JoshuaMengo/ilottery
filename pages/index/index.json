@@ -1,0 +1,8 @@
+{
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "index": "/components/index/index",
+    "mine": "/components/mine/mine",
+    "draw": "/components/draw/draw"
+  }
+}

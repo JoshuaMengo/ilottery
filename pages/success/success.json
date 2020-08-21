@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "painter": "/components/painter/painter",
+    "comment": "/components/comment/comment",
+    "mp-halfScreenDialog": "weui-miniprogram/half-screen-dialog/half-screen-dialog"
+  }
+}

@@ -1,0 +1,19 @@
+<!--components/draw/draw.wxml-->
+<view class="page_box">
+	<view class="page_tit">
+		<image src="/resources/icon/create_raffle.png"></image>
+	</view>
+	<view class="content">
+		<view class="draw_container" bindtap="enter_edit">
+			<image src="/resources/icon/entity.png"></image>
+		</view>
+
+		<view wx:if="{{!is_close}}" class="draw_container" bindtap="enter_paper">
+			<image src="/resources/icon/paper.png"></image>
+		</view>
+
+      <!-- <view class="draw_container" bindtap="enter_paper">
+			<image src="/resources/icon/interest.png"></image>
+		</view> -->
+	</view>
+</view>

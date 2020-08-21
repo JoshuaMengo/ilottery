@@ -1,0 +1,26 @@
+<view class="container">
+  <view class="comment_top">
+    <view>留言 <text class="text-red">{{comment_list.length>0?comment_list.length:''}}</text></view>
+    <view wx:if="{{is_admin}}" catchtap="switch_examine"> 
+      <text class="{{examine?'text-red':'text-grey'}}">审核留言 | </text>
+      <text class="{{examine?'text-grey':'text-red'}}">查看精选</text>
+    </view>
+    <view catchtap="show_comment" >写留言 <image src="/resources/icon/edit.png"></image> </view>
+  </view>
+  <view class="comment_line" wx:for="{{comment_list}}" wx:key="item">
+    <view class="comment_user">
+      <view><image src="{{item.avatarUrl}}"></image> {{item.nickName}}</view> 
+      <view class="text-sm {{item.is_hot?'text-red':'text-grey'}}" wx:if="{{examine && is_admin}}" catchtap="examine_comment" data-cid="{{item.cid}}" data-idx="{{index}}">{{item.is_hot?'已精选':'精选'}}</view>
+      <view class="text-sm {{item.is_hot?'text-red':'text-grey'}}" wx:if="{{is_admin && !examine}}" >
+        <text catchtap="show_reply" data-cid="{{item.cid}}" data-idx="{{index}}">回复</text>
+        <text> | </text>
+        <text catchtap="examine_comment" data-cid="{{item.cid}}" data-idx="{{index}}">取消精选</text>
+      </view>
+    </view>
+    <view class="comment">{{item.content}}</view>
+    <view class="reply_content" wx:if="{{item.reply}}">{{item.reply}}</view>
+  </view>
+  <view class="comment_line" wx:if="{{!comment_list[0]}}">
+    <view class="comment">还没人留言哦，赶紧抢沙发~</view>
+  </view>
+</view>

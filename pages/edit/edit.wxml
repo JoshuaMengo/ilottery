@@ -1,0 +1,216 @@
+
+<view class="front_img" bindtap="cover_upload">
+  <image src="{{cover_img || src}}" mode="aspectFill"></image>
+  <view class="img-tag">点击更换封面图</view>
+</view>
+ 
+<view class="container">
+  <!-- <view class="cu-form-group">
+		<view class="title">奖项操作</view>
+		<view class="">
+      <button class="cu-btn line-grey shadow" bindtap="del_award" style="width:170rpx;">删除奖项</button>
+      <button class="cu-btn line-red shadow" style="margin-left:30rpx;width:170rpx;" bindtap="add_award">新增奖项</button>
+    </view>
+	</view> -->
+
+  <block wx:for="{{awards}}" wx:key="item" wx:for-index="idx">
+    <view class="cu-form-group margin-top" >
+      <view class="title">奖品名称</view>
+      <input style="margin-right:20rpx;" placeholder="输入奖品名称" data-idx="{{idx}}" bindinput="aw_name_input"></input>
+    </view>
+
+    <view class="cu-form-group">
+      <view class="title">奖品数量</view>
+      <input style="margin-right:20rpx;" placeholder="输入奖品数量" data-idx="{{idx}}" type="number" bindinput="aw_num_input"></input>
+    </view>
+
+    <view class="cu-form-group ">
+      <view class="title">奖品等级</view>
+      <view class="text-black" style="margin-right:30rpx;">{{idx+1}}等奖</view>
+    </view>
+
+    <view class="cu-form-group text-gray" style="justify-content: center;" bindtap="del_award">
+      <image src="/resources/svg/del.svg" style="width:40rpx;height:40rpx;" ></image>删除选项
+    </view>
+  </block>
+
+  <view class="cu-form-group margin-top" style="justify-content: center;border: 1rpx solid #BF5959;color:#BF5959;font-weight:bold;" bindtap="add_award">
+    <image src="/resources/svg/add2.svg" style="width:40rpx;height:40rpx;margin-right:15rpx;"></image>新增选项
+  </view>
+
+  <view class="cu-form-group margin-top">
+		<view class="title">领奖方式</view>
+    <picker bindchange="address_Change" value="{{index}}" range="{{open_award_range}}">
+      <view class="picker">{{ get_award_method || '选择领奖方式'}}</view>
+    </picker>
+	</view>
+
+  <view class="cu-form-group">
+    <view class="title">开奖方式</view>
+    <picker bindchange="open_Change" value="{{index}}" range="{{get_award_range}}">
+      <view class="picker">{{ open_award_method || '选择开奖方式'}}</view>
+    </picker>
+  </view>
+
+  <view class="cu-form-group" wx:if="{{is_full}}">
+    <view class="title">开奖人数</view>
+    <input placeholder="输入开奖人数" bindinput="full_num_input"></input>
+  </view>
+
+  <view class="cu-form-group" wx:if="{{is_countdown}}">
+    <view class="title">开奖时间</view>
+    <view class="flex">
+      <view class="action">
+        <picker mode="date" value="{{date}}" start="{{limit_start_date}}" bindchange="DateChange">
+          <view class="">
+            {{date || '选择日期'}}
+          </view>
+        </picker>
+      </view>
+      <view class="action">
+        <picker mode="time" value="{{time}}" start="{{limit_start_time}}" end="23:59" bindchange="TimeChange">
+          <view class="picker">
+            {{time || '选择时间'}}
+          </view>
+        </picker>
+      </view>
+    </view>
+  </view>
+
+  <view class="cu-form-group margin-top">
+    <view class="action">
+      <text class="cuIcon-title text-red"></text>
+      活动说明、奖品图片(最多6张)
+    </view>
+    <view class="action">
+      {{desc.length || 0}}/300
+    </view>
+  </view>
+
+  <view class="cu-form-group">
+    <view class="text_content">
+      <textarea style="min-height:300rpx;" auto-height="true" placeholder="抽奖活动说明" maxlength="300" bindinput="textareaAInput"></textarea>
+      <view wx:for="{{desc_imgs}}" wx:key="item" class="img_block" wx:if="{{item}}">
+        <image class="desc_img"  src="{{item}}" mode="widthFix"></image>
+        <view class="cu-tag cu_tag" catchtap="DelImg" data-index="{{index}}">
+          <text class="cuIcon-close"></text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="cu-form-group" style="padding-top:20rpx;">
+		<view class="grid col-4 grid-square flex-sub">
+			<view class="solids" bindtap="ChooseImage">
+				<text class="cuIcon-cameraadd"></text>
+			</view>
+		</view>
+	</view>
+
+  <view class="cu-form-group margin-top">
+    <view class="title"><text class="cuIcon-title text-red"></text>发起方微信</view>
+    <input style="margin-right:20rpx;" placeholder="输入发起方微信" data-idx="{{idx}}" bindinput="wechat_input"></input>
+  </view>
+
+  <view class="cu-form-group">
+    <view class="action">
+      <text class="cuIcon-title text-red"></text>
+      发起方信息
+    </view>
+    <view class="text_content">
+      <input style="text-align:right;" placeholder="您的品牌名/公众号/个人昵称" bindinput="qrcode_input"></input>
+      
+    </view>
+  </view>
+
+  <!-- <view class="cu-form-group">
+    
+  </view> -->
+
+  <view class="cu-bar bg-white">
+		<view class="action">
+			上传二维码图片
+		</view>
+	</view>
+  <view class="cu-form-group" wx:if="{{!ads[0].img}}">
+		<view class="grid col-4 grid-square flex-sub">
+			<view class="solids" bindtap="add_qrcode">
+        <!-- <image src="/resources/new/code.png" style="width:80rpx;;height:80rpx;" mode="aspectFill"></image> -->
+				<text class="cuIcon-qrcode"></text>
+			</view>
+		</view>
+	</view>
+  <view class="cu-form-group" wx:if="{{ads[0].img}}">
+    <image wx:if="{{ads[0].img}}" style="width:140rpx;height:140rpx;margin-bottom:20rpx;" src="{{ads[0].img}}" mode="aspectFill"></image>
+  </view>
+
+  <view class="cu-form-group margin-top">
+    <view class="action">
+      <text class="cuIcon-title text-red"></text>
+      需要授权手机号
+    </view>
+    <view class="action">
+      <switch class="red sm" checked="{{need_phone}}" bindchange="phone_change"></switch>
+    </view>
+  </view>
+
+  <view class="cu-form-group" wx:if="{{need_command}}">
+    <view class="text_content">
+      <input placeholder="请输入参与口令(20字内)" bindinput="command_input"></input>
+    </view>
+  </view>
+
+  <view class="cu-form-group margin-top">
+    <view class="action">
+      <text class="cuIcon-title text-red"></text>
+      参与口令
+    </view>
+    <view class="action">
+      <switch class="red sm" checked="{{need_command}}" bindchange="command_change"></switch>
+    </view>
+  </view>
+
+  <view class="cu-form-group" wx:if="{{need_command}}">
+    <view class="text_content">
+      <input placeholder="请输入参与口令(20字内)" bindinput="command_input"></input>
+    </view>
+  </view>
+
+  <view class="cu-form-group margin-top">
+    <view class="action">
+      <text class="cuIcon-title text-red"></text>
+      禁止分享
+    </view>
+    <view class="action">
+      <switch class="red sm" checked="{{forbid_share}}" bindchange="share_change"></switch>
+    </view>
+  </view>
+
+  <view class="cu-form-group margin-top">
+    <view class="title"><text class="cuIcon-title text-red"></text>活动备注</view>
+    <input style="margin-right:20rpx;" placeholder="输入活动备注(选填)" data-idx="{{idx}}" type="number" bindinput="remark_input"></input>
+  </view>
+
+  <view class='bottom_btn'>
+    <button class='confirm' bindtap="confirm" disabled="{{btn_disabled}}" open-type='getUserInfo' bindgetuserinfo='onGotUserInfo'>立即发起抽奖</button>
+  </view>
+
+  <button class="bot_btn" bindtap="confirm"></button>
+</view>
+
+
+<view class="cu-modal {{modalName=='Modal'?'show':''}}" catchtap="hideModal">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content text-red">关于参与口令</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding-xl">
+      <view>1、设置参与口令后，用户需要输入正确口令才能参与抽奖；</view>
+      <view>2、用户可以通过添加/关注您的微信、公众号获取口令，需要在发起方信息中上传您的二维码；</view>
+      <view>3、公众号主体的发起者请在公众号后台设置好关键词 “口令” 的自动回复，将正确口令发送给用户。</view>
+    </view>
+  </view>
+</view>

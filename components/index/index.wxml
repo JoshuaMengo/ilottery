@@ -1,0 +1,70 @@
+<view class="top_tips">
+  <view style="display:flex;align-items: center;" class="text-red">
+    <image src="/resources/new/gold2.png" style="width:44rpx;height:44rpx;margin-right:10rpx;"></image>{{point}}
+  </view>
+  <view style="font-size:20rpx;color:rgba(0, 0, 0, 0.5);">累计 <text style="color:#101010;font-size:24rpx;font-weight:600;">{{total_count}}</text> 人参与了抽奖</view>
+</view>
+
+<view class="sign_block">
+  <image src="/resources/icon/sign.png" catchtap="enter_sign" style="width:335rpx;height:114rpx;"></image>
+  <image src="/resources/icon/lucky.png" catchtap="enter_turn" style="width:335rpx;height:114rpx;"></image>
+</view>
+
+<view class="banner" style="height:auto;">
+  <image src="/resources/icon/welfare.png" style="width:140rpx;height:45rpx;" mode="aspectFill"></image>
+</view>
+
+<block wx:for="{{lottery_list}}" wx:key="item" wx:for-index="idx">
+  <view class="cu-card case {{isCard?'no-card':''}}" bindtap="enter_lottery" data-lid="{{item.lid}}">
+    <view class="cu-item shadow" style="margin:20rpx 30rpx;">
+      <view class="image">
+        <image src="{{item.photo || item.introduce_pic[0]}}" mode="aspectFill"></image>
+        <view class="cu-tag bg-red">热门</view>
+      </view>
+      <view class="cu-list menu-avatar">
+        <view class="cu-item" style="height:120rpx;">
+          <view class="content flex-sub">
+            {{item.ads[0].name}} | <text style="color:#101010;">发起</text> 
+          </view>
+        </view>
+
+        <view class="text-desc" style="flex-direction: column;">
+          <text wx:for="{{item.prizes}}" wx:for-item="p_item" wx:key="p_item">{{p_item.level}}等奖：{{p_item.name}} x {{p_item.num}}份</text>
+        </view>
+
+        <view class="text-desc" style="margin-top: 25rpx;">
+          <text class="text-cut text-time" wx:if="{{item.is_countdown}}">进行中 | {{item.start_time}}开奖</text>
+          <text class="text-cut text-time" wx:if="{{item.is_full}}">进行中 | 满{{item.full_num}}人自动开奖</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</block>
+
+<swiper class="banner" wx:for="{{ bannerList }}" autoplay circular>
+  <swiper-item>
+    <!-- <image catchtap="enter_mini" data-flag="love" src="/resources/icon/mini.png" style="width:100%;height:160rpx;border-radius: 10rpx;" mode="aspectFill"></image> -->
+    <image   catchtap="enter_miniProgram" data-appid="{{item.appid}}" data-path="{{ item.path }}" src="{{item.img}}" style="width:100%;height:160rpx;border-radius: 10rpx;" mode="aspectFill"> </image>
+  </swiper-item>
+</swiper>
+
+<view class="banner" style="height:auto;">
+  <image src="/resources/icon/recommend.png" style="width:140rpx;height:45rpx;" mode="aspectFill"></image>
+</view>
+
+<block wx:for="{{recommend_list}}" wx:key="item" wx:for-index="idx">
+  <view class="recommend" bindtap="enter_lottery" data-lid="{{item.lid}}">
+    <image src="{{item.photo}}" style="width:180rpx;height:160rpx;margin-right:25rpx;" mode="aspectFill"></image>
+    <view style="display: flex;flex-direction: column;height:140rpx;justify-content: space-around;"> 
+      <view>
+        <view style="width:400rpx;overflow: hidden;">{{item.prizes[0].name}} x {{item.prizes[0].num}}份</view>
+        <!-- <view wx:for="{{item.prizes}}" wx:for-item="p_item" wx:key="p_item" wx:for-index="idx" wx:if="{{idx<2}}">{{p_item.name}} x {{p_item.num}}份</view> -->
+      </view>
+
+      <view style="margin-top: 25rpx;">
+        <text class="text-cut text-time" wx:if="{{item.is_countdown}}">进行中 | {{item.start_time}}开奖</text>
+        <text class="text-cut text-time" wx:if="{{item.is_full}}">进行中 | 满{{item.full_num}}人自动开奖</text>
+      </view>
+    </view>
+  </view>
+</block>

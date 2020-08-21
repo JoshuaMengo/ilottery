@@ -1,0 +1,17 @@
+/* pages/comment/comment.wxss */
+@import "../lottery/lottery.wxss";
+
+
+page{
+  padding-bottom: 40rpx;
+}
+.flex_align{
+  display: flex;
+  justify-content: space-around;
+}
+.reason_container{
+  padding: 0 100rpx;
+}
+.reason_container text{
+  padding:0 20rpx;
+}

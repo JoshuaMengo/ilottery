@@ -1,0 +1,26 @@
+/* components/draw/draw.wxss */
+.page_box{
+   padding:50rpx 40rpx;
+}
+
+.page_tit{
+   width: 180rpx;
+   height: 80rpx;
+}
+.page_tit image{
+   height: 100%;
+   width: 100%;
+}
+.content{
+   margin-top:40rpx;
+}
+.draw_container{
+   border-radius: 10px;
+   height: 200rpx;
+   margin-bottom: 40rpx;
+   overflow: hidden;
+}
+.draw_container image{
+   height:100%;
+   width:100%;
+}

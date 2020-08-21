@@ -1,0 +1,44 @@
+<!--index.wxml-->
+<view class="flex" style="height:100vh;width:100%;flex-direction: column;position:relative" wx:if="{{show_tiao}}">
+	<!-- <ad-custom unit-id="adunit-2e30910bb983281b"></ad-custom>
+	<view class="pass_time" bindtap="{{pass_time == 0 ? 'isPass': null}}">{{pass_time == 0 ? '跳過' : pass_time +'s'}}</view> -->
+	<view style="height:76%;width:100%;background:#EF5857;display: flex;align-items: center;justify-content: center;flex-direction: column;">
+    <image src="/resources/new/loading.gif" mode="aspectFit" class="response" style="height:320rpx;z-index:99"></image>
+    <view class="tiao" catchtap="tiaoguo" wx:if="{{show_tiao}}">跳过</view>
+    <view style="color:white;font-size:24rpx;letter-spacing: 12rpx;">PLEASE WAIT</view>
+  </view>
+  <view style="height:24%;color:#fff;display: flex;flex-direction: column;align-items: center;justify-content: center;background:#fff;">
+    <image src="/resources/new/logo.png" style="width:110rpx;height:110rpx;"></image>
+    <view style="font-size:28rpx;color:black;font-weight:bold;letter-spacing: 4rpx;margin-top:25rpx;">i抽一抽</view>
+    <view style="font-size:24rpx;color:rgba(44, 44, 44, 0.25);letter-spacing: 10rpx;margin-top:8rpx;">微信小程序</view>
+  </view>
+</view>
+
+<block wx:if="{{ !show_tiao}}">
+	<index wx:if="{{PageCur=='index'}}" bannerList="{{bannerList}}" lottery_list="{{lottery_list}}" recommend_list="{{recommend_list}}" point="{{point}}" total_count="{{total_count}}"></index>
+
+	<mine wx:if="{{PageCur=='mine'}}" is_close="{{is_close}}"></mine>
+	<draw wx:if="{{PageCur=='create'}}" is_close="{{is_close}}"></draw>
+
+
+	<view class="cu-bar tabbar bg-white shadow foot">
+		<view class="action" bindtap="NavChange" data-cur="index">
+			<view class='cuIcon-cu-image'>
+				<image src="/resources/icon/{{PageCur=='index'?'indexed':'index'}}.png"></image>
+			</view>
+			<view class="{{PageCur=='index'?'text_red':'text_gray'}}">首页</view>
+		</view>
+		<view class="action" bindtap="NavChange2" data-cur="create">
+			<view class='cuIcon-cu-image'>
+				<image src="/resources/icon/{{PageCur=='create'?'created':'create'}}.png"></image>
+			</view>
+			<view class="{{PageCur=='create'?'text_red':'text_gray'}}">发起抽奖</view>
+		</view>
+		<view class="action" bindtap="NavChange" data-cur="mine">
+			<view class='cuIcon-cu-image'>
+				<image src="/resources/icon/{{PageCur=='mine'?'mined':'mine'}}.png"></image>
+			</view>
+			<view style="text-align: center;" class="{{PageCur=='mine'?'text_red':'text_gray'}}">我的</view>
+		</view>
+	</view>
+</block>

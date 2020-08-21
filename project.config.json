@@ -1,0 +1,246 @@
+{
+	"description": "项目配置文件",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": true,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true,
+		"coverView": true,
+		"autoAudits": false,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		},
+		"useCompilerModule": true,
+		"userConfirmedUseCompilerModuleSwitch": false
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.10.0",
+	"appid": "wx0e079ae3cc6a2c8c",
+	"projectname": "%E6%8A%BD%E5%A5%962",
+	"debugOptions": {
+		"hidedInDevtools": []
+	},
+	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": -1,
+					"name": "编辑",
+					"pathName": "pages/edit/edit",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 1,
+					"name": "参与抽奖",
+					"pathName": "pages/lottery/lottery",
+					"query": "lid=181",
+					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "名单",
+					"pathName": "pages/list/list",
+					"query": "lid=209",
+					"scene": null
+				},
+				{
+					"id": 3,
+					"name": "pages/mine/mine",
+					"pathName": "pages/mine/mine",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 4,
+					"name": "积分",
+					"pathName": "pages/jifen/jifen",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 5,
+					"name": "参与记录",
+					"pathName": "pages/record/record",
+					"query": "status=2",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "管理后台",
+					"pathName": "pages/admin/admin",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "积分记录",
+					"pathName": "pages/pointlog/pointlog",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 8,
+					"name": "转盘",
+					"pathName": "pages/turn/turn",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 9,
+					"name": "推送",
+					"pathName": "pages/adv/adv",
+					"query": "lid=24",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/chat/chat",
+					"pathName": "pages/chat/chat",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 11,
+					"name": "助力",
+					"pathName": "pages/help/help",
+					"query": "uid=1&lid=216",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "投诉举报",
+					"pathName": "pages/report/report",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "反馈记录",
+					"pathName": "pages/logs/logs",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 14,
+					"name": "web-view",
+					"pathName": "pages/webview/webview",
+					"query": "url=https://mp.weixin.qq.com/s/uLRRYNi8iGQlh4ppQLGjCg",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "更多留言",
+					"pathName": "pages/comment/comment",
+					"query": "lid=111",
+					"scene": null
+				},
+				{
+					"id": 16,
+					"name": "pages/lottery/lottery",
+					"pathName": "pages/lottery/lottery",
+					"query": "lid=675",
+					"scene": null
+				},
+				{
+					"id": 17,
+					"name": "pages/success/success",
+					"pathName": "pages/success/success",
+					"query": "lid=20",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/index/index",
+					"pathName": "pages/index/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/manage/manage",
+					"pathName": "pages/manage/manage",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/draw/draw",
+					"pathName": "pages/draw/draw",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/paper/paper",
+					"pathName": "pages/paper/paper",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/wallet/wallet",
+					"pathName": "pages/wallet/wallet",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/cash_record/cash_record",
+					"pathName": "pages/cash_record/cash_record",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/lucky_draw/lucky_draw",
+					"pathName": "pages/lucky_draw/lucky_draw",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/paper_edit/paper_edit",
+					"pathName": "pages/paper_edit/paper_edit",
+					"query": "",
+					"scene": null
+				}
+			]
+		}
+	}
+}

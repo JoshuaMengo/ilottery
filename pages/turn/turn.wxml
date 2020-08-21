@@ -1,0 +1,63 @@
+<!--pages/turn/turn.wxml-->
+<view class="title">
+  <view>
+    <view>幸运大转盘</view>
+    <view style="font-size:24rpx;font-weight:500;margin-left: 40rpx;margin-top:5rpx;letter-spacing: 3rpx;">LUCKY TURNTABLE</view>
+  </view>
+  <view class="right_btn"><image src="/resources/new/gold2.png" style="width:40rpx;height:40rpx;margin-right:10rpx;"></image> {{reward_point}}</view>
+</view>
+
+
+<view class="parent_block"></view>
+<view class="tuen_block">
+  <view wx:for="{{range_block}}" wx:key="item" wx:for-index="idx">
+    <view wx:if="{{idx!=4}}" class="turn_parent {{idx+1==cur_item?'checked':''}}"></view>
+    <view wx:if="{{idx!=4}}" class="turn_item {{idx+1==cur_item?'turn_item_check':''}}">
+      <image wx:if="{{item.img}}" src="{{item.img}}" style="width:160rpx;height:110rpx;margin-bottom:10rpx;" mode="aspectFill"></image>
+      <view class="{{item.img?'':'text_center'}}">{{item.name}}</view>
+    </view>
+
+    <view wx:if="{{idx==4}}" class="lw_btn" catchtap="lw_btn">
+      <view>抽奖</view>
+      <view style="font-size:24rpx;font-weight:500;">-50幸运币</view>
+    </view>
+  </view>
+</view>
+
+<!-- <view class="b_luck_view_parent"></view>
+<view class="b_luck_view">
+  <view class="luck_left"><text>手气最佳</text></view>
+  <view class="luck_right" style="height:70rpx;">
+    <block wx:for="{{broadcast}}" wx:key="item">
+      <view class="luck_item" style="top:{{notice_top}}rpx">
+        <view><text style="color: #B32E2E;">{{item.name}}</text>  抽中了 <text style="color: #B32E2E;">{{item.prize}}</text></view>
+      </view>
+    </block>
+  </view>
+</view> -->
+
+
+<view class="tips">
+  <view style="font-weight: bold;margin-bottom:15rpx;">规则说明</view>
+  <view style="font-size: 24rpx;">1、每次抽奖消耗50幸运币</view>
+  <view style="font-size: 24rpx;">2、奖品内容不定时更新，每期奖品数量有限，送完即止</view>
+</view>
+
+<view class="cu-modal {{modalName=='Image'?'show':''}}" style="">
+  <view class="cu-dialog" style="width:600rpx;background-color: rgba(0, 0, 0, 0);">
+    <image src="{{lw_data.is_point?'/resources/new/draw.png':'/resources/new/no_draw.png'}}" style="width:300rpx;height:300rpx;z-index:9;"></image>
+    <view class="lw_tip" style="height:300rpx;background-color: rgb(255, 255, 255);margin-top:-170rpx;border-radius: 10rpx;">
+      <view class="text-red ">{{lw_data.is_point?lw_data.name:'很抱歉，奖品与你擦肩而过'}}</view>
+    </view>
+    
+    <!-- <view style="color:#fff;font-size:32rpx;">{{lw_data.name}}</view> -->
+    <!-- <view class="bg-img">
+      
+      <view class="cu-bar justify-end text-white">
+        <view class="action" bindtap="hideModal">
+          <text class="cuIcon-close "></text>
+        </view>
+      </view>
+    </view> -->
+  </view>
+</view>

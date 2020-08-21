@@ -1,0 +1,19 @@
+<scroll-view scroll-y="{{modalName==null}}" class="page {{modalName!=null?'show':''}}">
+  <block wx:for="{{win_list}}" wx:key="item">
+    <view class="cu-list menu margin-top {{menuBorder?'sm-border':''}} {{menuCard?'card-menu margin-top':''}}">
+      <view class="cu-item {{menuArrow?'arrow':''}}">
+        <view class="action">
+          <view class="cu-avatar-group">
+            <view class="cu-avatar round sm" style="background-image:url({{item.user.avatarUrl}});"></view>
+          </view>
+          <text class="text-grey text-sm" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;max-width:200rpx;"> {{item.user.nickName}}</text>
+        </view>
+
+        <view class="action flex">
+          <view class="text-red prize">{{item.prize.name}}</view>
+          <text class="text-grey" style="margin-right:20rpx;">{{item.winning_code}}</text>
+        </view>
+      </view>
+    </view>
+  </block>
+</scroll-view>

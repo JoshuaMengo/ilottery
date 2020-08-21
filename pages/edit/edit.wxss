@@ -1,0 +1,145 @@
+/* pages/edit/edit.wxss */
+@import "/colorui/main.wxss";
+@import "/colorui/icon.wxss";
+
+page{
+
+}
+
+.front_img{
+  width: 100%;
+  height: 400rpx;
+  margin-top: 20rpx;
+  position: relative;
+}
+
+.solids{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.front_img image{
+  width: 100%;
+  height: 100%;
+}
+
+input{
+  text-align:right;
+}
+
+.container{
+  width: 95%;
+  margin: 0 auto;
+}
+
+button:not([size='mini']){
+  width: auto;
+  min-height: auto;
+}
+
+button::after{
+  border: none;
+}
+button{
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0);
+  font-weight: 500;
+}
+
+.flex{
+  display: flex;
+  align-items: center;
+}
+
+.img-tag{
+  position: absolute;
+  bottom: 10rpx;
+  right: 10rpx;
+  background-color: rgba(31, 31, 32, 0.4);
+  padding: 10rpx 10rpx;
+  color: #fff;
+  font-size: 24rpx;
+}
+
+.text_content{
+  /* width: 100%; */
+  flex: 1;
+  margin: 0 auto;
+  /* margin-top: 20rpx; */
+}
+
+.text_content input{
+  text-align: left;
+}
+
+.text_content image{
+  width: 95%;
+  margin: 0 auto;
+  margin-top: 20rpx;
+  margin-left: 15rpx;
+  height: 400rpx;
+}
+
+.bot_btn{
+  width: 100%;
+  height: 60rpx;
+}
+
+.bottom_btn{
+  width: 80%;
+  margin: 0 auto;
+}
+
+.confirm{
+  margin: 0 auto; 
+  margin-top: 60rpx;
+  background-color: #C83636;
+  box-shadow: 0rpx 0rpx 30rpx #C83636;
+  color: white;
+  font-size: 30rpx;
+  padding-top: 25rpx;
+  padding-bottom: 25rpx;
+  font-weight: 500;
+  letter-spacing: 3rpx;
+}
+
+.desc_img{
+  width: 100%;
+  border-radius: 10rpx;
+}
+
+.cu_tag{
+  position: absolute !important;
+  top: 20rpx;
+  right: 20rpx;
+  z-index: 99;
+  background-color: rgba(31, 31, 32, 0.3) !important;
+  color: white;
+}
+
+.img_block{
+  position: relative;
+}
+
+.padding-xl{
+  padding-bottom: 70rpx;
+}
+
+.padding-xl view{
+  text-align: left;
+  letter-spacing: 3rpx;
+  margin-top: 20rpx;
+}
+
+.cu-form-group wx-input{
+  padding-right: 0rpx !important;
+}

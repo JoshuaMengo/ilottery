@@ -1,0 +1,33 @@
+/* pages/cash_record/cash_record.wxss */
+page{
+   background:white;
+}
+.flex{
+   display: flex;
+}
+
+.record_tit{
+   padding:40rpx;
+   border-bottom: 1px solid rgba(244, 245, 245, 1);
+}
+.record_icon{
+   height: 42rpx;
+   width: 42rpx;
+   margin-right: 10rpx;
+}
+
+.record_item{
+   padding:40rpx 0;
+   margin:0 40rpx;
+   justify-content: space-between;
+   align-items: center;
+   border-bottom: 1px solid rgba(244, 245, 245, 1);
+}
+.record_time{
+   color:#949494;
+}
+.feedback{
+   margin-top:40rpx;
+   text-align: center;
+   color:#B6B6B6;
+}

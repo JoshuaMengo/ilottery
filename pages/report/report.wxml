@@ -1,0 +1,63 @@
+<!--pages/report/report.wxml-->
+<form>
+  <view class="cu-form-group margin-top" style="margin-bottom:20rpx;" wx:if="{{lid}}">
+		<view class="title">活动奖品：{{title}}</view>
+	</view>
+
+  <view class="cu-form-group" wx:for="{{lid?array_reason:array_reason2}}" wx:key="item" catchtap="show_report" data-reason="{{item}}">
+		<view class="title">{{item}}</view>
+		<text class="cuIcon-right lg text-gray"></text>
+	</view>
+</form>
+
+
+<navigator url="../logs/logs" class="tips">反馈记录</navigator>
+
+<navigator url="../logs/logs?type=fee" wx:if="{{is_admin}}" class="tips">提现反馈记录</navigator>
+
+
+
+<view class="cu-modal {{modalName=='report'?'show':''}}">
+  <view class="cu-dialog" style="vertical-align:top;margin-top:40rpx;">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">{{reason}}</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding">
+      <form>
+        <view class="cu-form-group" hidden="{{!modalName}}">
+          <textarea maxlength="-1" bindinput="textareaAInput" placeholder="描述详情" style="height:300rpx;text-align:left;margin:20rpx auto;"></textarea>
+        </view>
+
+        <view class="cu-bar bg-white margin-top">
+          <view class="action">
+            图片上传
+          </view>
+          <view class="action">
+            {{desc_imgs.length}}/3
+          </view>
+        </view>
+        
+        <view class="cu-form-group">
+          <view class="grid col-4 grid-square flex-sub">
+            <view class="bg-img" wx:for="{{desc_imgs}}" wx:key="item" wx:for-index="idx" bindtap="ViewImage" data-url="{{item}}">
+              <image src='{{item}}' mode='aspectFill' style="margin-left:-60rpx;"></image>
+              <view class="cu-tag bg-red" catchtap="DelImg" data-index="{{idx}}">
+                <text class="cuIcon-close"></text>
+              </view>
+            </view>
+            
+            <view class="solids" bindtap="ChooseImage" wx:if="{{desc_imgs.length<3}}">
+              <text class="cuIcon-cameraadd"></text>
+            </view>
+          </view>
+        </view>
+
+        <button class="cu-btn bg-red margin-top" style="font-weight:500;" catchtap="send" open-type='getUserInfo' bindgetuserinfo='onGotUserInfo'>提交</button>
+      </form>
+    </view>
+  </view>
+</view>
+

@@ -1,0 +1,126 @@
+<view class="box">
+  <view class="cu-bar search bg-white">
+    <view class="search-form round">
+      <input type="text" style="padding-left:20rpx;" placeholder="根据备注内容搜索" bindinput="remark_input"></input>
+    </view>
+    <view class="action">
+      <view class="text-red text-bold" style="letter-spacing: 4rpx;" catchtap="search_lottery">搜索</view>
+    </view>
+  </view>
+</view>
+
+<view class="join_view" wx:for="{{lottery_list}}" wx:key="item" catchtap="enter_lottery" data-lid="{{item.lid}}" wx:for-index="idx" style="width:90%;">
+  <view class="top">
+    <view>
+      <text class="cuIcon-title text-red"></text> {{item.is_end ? '已结束' : '进行中'}}  
+      <text style="color:#101010;font-size:26rpx;margin-left:20rpx">活动id: {{item.lid}}</text>
+      <text class="text-red" wx:if="{{item.is_fake}}" style="font-size:26rpx;margin-left:40rpx">(已设置虚拟开奖)</text> 
+    </view>
+  </view>
+
+  <view class="top" style="margin-top:20rpx;">
+    <view style="color:#101010;" style="display:flex;align-items: center;">
+      <view style="width:50rpx;height:50rpx;" class="cu-avatar round" style="background-image:url({{item.avatarUrl || item.ads[0].img}});"></view>
+      <view style="margin-left:12rpx;">{{item.ads[0].name}} <text class="text-gray">发起</text> </view> 
+    </view>
+  </view>
+
+  <view class="mid">
+    <view wx:for="{{item.prizes}}" wx:for-item="p_item" wx:key="item">
+      {{p_item.name}} x{{p_item.num}} 份
+    </view> 
+  </view>
+
+  <view class="bottom">
+    <view wx:if="{{item.is_full}}">满{{item.full_num}}人自动开奖</view>
+    <view wx:if="{{!item.is_full}}">{{item.start_time}}自动开奖</view>
+    <view class="text-red" wx:if="{{item.is_end}}">已结束</view>
+  </view>
+
+  <view class="hr"></view>
+
+  <view class="admin">
+    <view>已有{{item.join_num}}人参与
+      <text class="text-red" wx:if="{{item.is_show}}">(in首页)</text>
+      <text class="text-red" wx:if="{{item.is_recommend}}">(in推荐)</text>
+    </view>
+
+    <view class="action"><button class="cu-btn line-cyan text-cyan" catchtap="more" data-idx="{{idx}}" data-lid="{{item.lid}}" style="width: 190rpx;margin-right:15rpx;">更多操作</button></view>
+  </view>
+
+  <view class="text-gray" style="margin-top:20rpx;font-size:24rpx;">创建发起时间：{{item.create_time || '2020-2-28 12:24'}}</view>
+</view>
+
+<view class="cu-modal {{modalName=='RadioModal'?'show':''}}" bindtap="hideModal" catchtouchmove="return">
+  <view class="cu-dialog" style="width:480rpx;">
+    <view class="cu-list menu text-left">
+      <view class="cu-item line-cyan text-cyan" style="text-align:center;">
+        <view class="flex-sub">活动id: {{lottery.lid}}的管理操作</view>
+      </view>
+
+      <view class="cu-item"  catchtap="show_index" data-lid="{{lottery.lid}}">
+        <view class="flex-sub">{{lottery.is_show ? '下架' : '上首页'}}</view>
+      </view>
+
+      <view class="cu-item" catchtap="recommend" data-lid="{{lottery.lid}}">
+        <view class="flex-sub">{{lottery.is_recommend ? '下架' : '上推荐'}}</view>
+      </view>
+
+      <view class="cu-item" catchtap="fake_num_input1">
+        <block wx:if="{{lottery.is_fake}}">
+          <view class="flex-sub" catchtap="fake" data-lid="{{lottery.lid}}">当前虚拟人数：</view>
+          <view class="flex-sub">
+            <input placeholder="参与人数" bindinput="fake_num_input" value="{{lottery.fake_num}}" type="number"></input>
+          </view>
+        </block>
+
+        <block wx:if="{{!lottery.is_fake}}">
+          <view class="flex-sub" catchtap="fake" data-lid="{{lottery.lid}}">设置参与人数</view>
+          <view class="flex-sub">
+            <input placeholder="参与人数" bindinput="fake_num_input" value="{{fake_num}}" type="number"></input>
+          </view>
+        </block>
+      </view>
+
+      <view class="cu-item" catchtap="show_change_prize" data-lid="{{lottery.lid}}">
+        <view class="flex-sub">设置部分开奖</view>
+      </view>
+
+      <view class="cu-item" catchtap="export_data" data-lid="{{lottery.lid}}">
+        <view class="flex-sub">导出名单</view>
+      </view>
+
+      <view class="cu-item" catchtap="enter_adv" data-lid="{{lottery.lid}}">
+        <view class="flex-sub">插入到推文</view>
+      </view>
+
+      <view class="cu-item" catchtap="delete_lottery" data-lid="{{lottery.lid}}">
+        <view class="flex-sub">删除该抽奖</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="cu-modal {{modalName=='setting'?'show':''}}" catchtap="hideModal" catchtouchmove="return">
+  <view class="cu-dialog" style="width:580rpx;" catchtap="test">
+    <view class="cu-list menu text-left">
+      <view class="cu-item line-cyan text-cyan" style="text-align:center;">
+        <view class="flex-sub">活动id: {{lottery.lid}} 设置部分开奖</view>
+      </view>
+
+      <view class="cu-item">
+        <view>奖品等级：</view>
+        <view class="flex-sub"><input placeholder="奖品等级(一等奖即：1)" bindinput="pid_input"  type="number" disabled="{{modalName!='setting'}}"></input></view>
+      </view>
+
+      <view class="cu-item">
+        <view>该奖项开奖人数：</view>
+        <view class="flex-sub"><input placeholder="真实开奖人数" bindinput="pid_num_input" type="number" disabled="{{modalName!='setting'}}"></input></view>
+      </view>
+
+      <view class="cu-item line-cyan text-cyan" style="text-align:center;" catchtap="change_prize">
+        <view class="flex-sub">确定设置</view>
+      </view>
+    </view>
+  </view>
+</view>

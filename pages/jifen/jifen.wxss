@@ -1,0 +1,130 @@
+/* pages/jifen/jifen.wxss */
+/* @import "/colorui/main.wxss";
+@import "/colorui/icon.wxss"; */
+
+.top_line{
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 2rpx solid #eeeeee;
+  flex-direction: column;
+}
+
+.log{
+  position: fixed;
+  right: 0rpx;
+  top: 60rpx;
+  background-color: #fff;
+  border-top-left-radius: 100rpx;
+  border-bottom-left-radius: 100rpx;
+  font-size: 24rpx;
+  padding: 20rpx 20rpx;
+  color: gray;
+}
+
+.task_view{
+  width: 90%;
+  /* height: 500rpx; */
+  background-color: #fff;
+  border-radius: 15rpx;
+  margin: 0 auto;
+  margin-top: 40rpx;
+}
+
+.task_top{
+  width: 100%;
+  height: 90rpx;
+  border-bottom: 1rpx solid #f7f3f3;
+  display: flex;
+  justify-content: space-around;
+}
+
+.task_top view{
+  line-height: 90rpx;
+}
+
+.bottom_view{
+  border-bottom: 8rpx solid #C83636;
+}
+
+.task{
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 10rpx;
+}
+
+.task_left view:nth-child(1){
+  font-size: 30rpx;
+  color: #101010;
+  font-weight: bold;
+}
+.task_left view:nth-child(2){
+  font-size: 26rpx;
+  color: #C83636;
+  margin-top: 10rpx;
+}
+
+.task_right{
+  width: 140rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #C83636;
+  border: 1rpx solid #C83636;
+  font-size: 24rpx;
+  border-radius: 100rpx;
+}
+
+.tip_title{
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #999999;
+  margin-top: 40rpx;
+  margin-left: 40rpx;
+  margin-bottom: 20rpx;
+}
+
+.tips view{
+  width: 90%;
+  margin: 0 auto;
+  letter-spacing: 3rpx;
+  line-height: 40rpx;
+  font-size: 26rpx;
+  color: #999999;
+}
+
+.clicked{
+  background-color: #C83636;
+  opacity: 0.35;
+  width: 140rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 24rpx;
+  border-radius: 100rpx;
+}
+
+button::after{
+  border: none;
+}
+button{
+  padding: 0rpx !important;
+  margin-bottom: 0;
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0);
+  font-weight: 500;
+  font-size: 24rpx !important;
+  color: #C83636;
+}

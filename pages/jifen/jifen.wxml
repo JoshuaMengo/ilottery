@@ -1,0 +1,65 @@
+<!--pages/jifen/jifen.wxml-->
+<view class="top_line">
+  <view style="color:#222222;font-size:32rpx;font-weight: bold;letter-spacing: 3rpx;">持有幸运币</view>
+  <view style="color:#D0414E;font-size:54rpx;font-weight: bold;letter-spacing: 3rpx;margin-top:20rpx;">{{user_info.reward_point}}</view>
+  <view class="log" catchtap="enter_log">记录 ></view>
+</view>
+
+<view class="task_view">
+  <view class="task_top">
+    <view class="{{curtar==0?'bottom_view':''}}" data-curtar="0" catchtap="select_task">新手任务</view>
+    <view class="{{curtar==1?'bottom_view':''}}" data-curtar="1" catchtap="select_task">每日任务</view>
+  </view>
+
+  <block wx:if="{{curtar==0}}">
+    <view class="task" >
+      <view class="task_left">
+        <view>首次授权</view>
+        <view>+100 幸运币</view>
+      </view>
+      <view class="task_right" wx:if="{{!is_auth}}">
+        <button open-type="getUserInfo" bindgetuserinfo='onGotUserInfo'>去授权</button> 
+      </view>
+      <view wx:if="{{is_auth}}" class="clicked">已授权</view>
+    </view>
+
+    <view class="task">
+      <view class="task_left">
+        <view>授权收货地址</view>
+        <view>+250 幸运币</view>
+      </view>
+      <view class="task_right" wx:if="{{!user_info.addr_auth}}" catchtap="get_addr">去授权</view>
+     
+      <view wx:if="{{user_info.addr_auth}}" class="clicked">已授权</view>
+    </view>
+  </block>
+
+  <block wx:if="{{curtar==1}}">
+    <view class="task" >
+      <view class="task_left">
+        <view>每日签到{{user_info.is_login?1:0}}/1</view>
+        <view>+100 幸运币</view>
+      </view>
+      <view class="{{user_info.is_login?'clicked':'task_right'}}" catchtap="sign_in">去完成</view>
+    </view>
+
+    <view class="task">
+      <view class="task_left">
+        <view>观看视频{{user_info.watch}}/10</view>
+        <view>+50 幸运币</view>
+      </view>
+      <view class="task_right" wx:if="{{user_info.watch<10}}" catchtap="videoAd_btn">去完成</view>
+      <view wx:if="{{user_info.watch>=10}}" class="clicked">已完成</view>
+    </view>
+  </block>
+</view>
+
+<view class="tip_title">规则说明</view>
+<view class="tips">
+  <view>1、幸运币是抽奖助手官方的虚拟积分；</view>
+  <view>2、每次参与抽奖可增加100个幸运币（增加抽奖码不增加幸运币）；</view>
+  <view>3、某些特定福利可能需要消耗幸运币；</view>
+  <view>4、通过完成新手/每日任务可获得相应数量的幸运币奖励；</view>
+  <view>5、新手任务只能完成 1 次，每日任务可重复完成，每日00:00重置进度；</view>
+  <view>6、进入“首页→幸运转盘”可使用幸运币抽奖获得相应奖励，进入“我的→积分集市”可使用幸运币兑换相应奖励；</view>
+</view>

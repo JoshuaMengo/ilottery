@@ -1,0 +1,71 @@
+<!--pages/cash_record/cash_record.wxml-->
+<!-- <text>pages/cash_record/cash_record.wxml</text> -->
+<view>
+	<view class="record_tit flex">
+		<view>
+			<image class="record_icon" src="/resources/icon/record.png"></image>
+		</view>
+		<view style="color:#3D3D3D;font-size:30rpx;">余额记录</view>
+	</view>
+
+	<view style="font-size:28rpx;">
+
+		<view class="record_item flex" wx:for="{{countData}}" wx:key="index">
+			<view>
+				<view>{{ item.introduce }}</view>
+				<view class="record_time">{{ item.create_time }}</view>
+			</view>
+			<view style="{{item.is_minus ? '' : 'color:red'}}">{{item.is_minus ? '-' : '+' }} {{item.fee}} 元</view>
+		</view>
+
+		<view wx:if="{{countData.length == 0}}" class="record_item" style="text-align:center">
+			<view>暂无记录</view>
+		</view>
+	</view>
+
+	<view class="feedback">对交易有疑问？<text bindtap="show_report" style="color:#7A9CD6">点击反馈</text></view>
+</view>
+
+<view class="cu-modal {{modalName=='report'?'show':''}}">
+  <view class="cu-dialog" style="vertical-align:top;margin-top:40rpx;">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">提现问题反馈</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding">
+      <form>
+        <view class="cu-form-group" hidden="{{!modalName}}">
+          <textarea maxlength="-1" bindinput="textareaAInput" placeholder="描述详情" style="height:300rpx;text-align:left;margin:20rpx auto;"></textarea>
+        </view>
+
+        <view class="cu-bar bg-white margin-top">
+          <view class="action">
+            图片上传
+          </view>
+          <view class="action">
+            {{desc_imgs.length}}/3
+          </view>
+        </view>
+        
+        <view class="cu-form-group">
+          <view class="grid col-4 grid-square flex-sub">
+            <view class="bg-img" wx:for="{{desc_imgs}}" wx:key="item" wx:for-index="idx" bindtap="ViewImage" data-url="{{item}}">
+              <image src='{{item}}' mode='aspectFill' style="margin-left:-60rpx;"></image>
+              <view class="cu-tag bg-red" catchtap="DelImg" data-index="{{idx}}">
+                <text class="cuIcon-close"></text>
+              </view>
+            </view>
+            
+            <view class="solids" bindtap="ChooseImage" wx:if="{{desc_imgs.length<3}}">
+              <text class="cuIcon-cameraadd"></text>
+            </view>
+          </view>
+        </view>
+
+        <button class="cu-btn bg-red margin-top" style="font-weight:500;" catchtap="send" open-type='getUserInfo' bindgetuserinfo='onGotUserInfo'>提交</button>
+      </form>
+    </view>
+  </view>
+</view>

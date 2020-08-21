@@ -1,0 +1,34 @@
+.text_gray{
+  text-align: center;
+  margin-top: 7rpx;
+  color: #101010;
+}
+
+.text_red{
+  color: #C83636;
+  text-align: center;
+  margin-top: 7rpx;
+}
+
+.tiao{
+  position: absolute;
+  padding: 12rpx 30rpx;
+  background-color: #fff;
+  color: rgba(44, 44, 44, 0.35);
+  font-size: 24rpx;
+  letter-spacing: 3rpx;
+  right: 30rpx;
+  bottom: 28vh;
+  border-radius: 40rpx;
+}
+.pass_time{
+  background: #f1f1f1;
+  width:200rpx;
+  height:80rpx;
+  line-height:80rpx;
+  text-align: center;
+  border-radius: 20px;
+  position: absolute;
+  top: 5%;
+  right:10%;
+}

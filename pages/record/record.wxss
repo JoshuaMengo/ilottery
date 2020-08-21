@@ -1,0 +1,85 @@
+/* pages/record/record.wxss */
+@import "/colorui/main.wxss";
+@import "/colorui/icon.wxss";
+
+.join_view{
+  width: 90%;
+  margin: 0 auto;
+  border-radius: 10rpx;
+  box-shadow: 0rpx 4rpx 16rpx 0rpx rgba(0, 0, 0, 0.15);
+  margin-top: 40rpx;
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+  padding-top: 30rpx;
+  padding-bottom: 30rpx;
+  background-color: #fff;
+}
+
+.join_view .top{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #BF5959;
+  font-size: 28rpx;
+}
+
+.join_view .mid{
+  margin-top: 40rpx;
+  font-size: 30rpx;
+  color: #101010;
+  letter-spacing: 3rpx;
+}
+
+.join_view .bottom{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #bababa;
+  font-size: 26rpx;
+  margin-top: 20rpx;
+}
+
+.hr{
+  width: 100%;
+  margin: 0 auto;
+  height: 1rpx;
+  border: 1rpx dashed #eeeeee;
+  margin-top: 30rpx;
+}
+
+.join_view .num{
+  margin-top: 20rpx;
+  color: #BF5959;
+  
+}
+
+.num_list{
+  display: flex;
+  align-items: center;
+  margin-top: 20rpx;
+}
+
+.num_list view{
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 10rpx;
+  background-color: rgb(236, 205, 205);
+  color: #BF5959;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15rpx;
+}
+
+.admin{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 40rpx;
+}
+
+button:not([size='mini']){
+  width: auto;
+  min-height: auto;
+  font-weight: 500;
+}

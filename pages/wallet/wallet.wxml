@@ -1,0 +1,57 @@
+<!--pages/wallet/wallet.wxml-->
+<!-- <text>pages/wallet/wallet.wxml</text> -->
+<view class="container">
+	<view>
+		<view class="icon_container">
+			<view>
+				<image src="/resources/icon/wallet.png"></image>钱包
+			</view>
+		</view>
+		<view style="color:white;font-size:24rpx">Moneybag</view>
+	</view>
+
+	<view class="content">
+		<view style="border-bottom: 1px solid rgba(244, 245, 245, 1);">
+			<mp-cell>
+				<view>我的余额</view>
+				<view slot="footer" bindtap="enter_cashRecord">记录 ></view>
+			</mp-cell>
+		</view>
+
+		<view class="content_btm flex_bewteen padding20">
+			<view class="num">￥{{user_info.fee ||'0.00'}}</view>
+			<view class="btn" bindtap="show_dialog">提现</view>
+		</view>
+	</view>
+
+</view>
+<view class="receive_cash">每日领现金</view>
+
+
+<mp-halfScreenDialog show="{{Withdrawal_dialog}}" maskClosable="{{false}}" tips="辅助提示内容，可根据实际需要安排">
+	<view slot="title">余额提现</view>
+	<view slot="desc" style="font-size:28rpx">
+		<view class="dialog_desc">
+			<input placeholder="输入提现金额" bindinput="changeFee"></input>
+			<button class="Withdrawal_btn" type="number" bindtap="Withdrawal">提现</button>
+		</view>
+
+		<view class="dialog_tips">
+			<view>当前可提现余额：3.50元</view>
+			<view>提现收取 2%手续费</view>
+		</view>
+	</view>
+	<view slot="footer" bindtap="hidden_dialog" style="color: rgba(16, 16, 16, 0.35);">取消</view>
+</mp-halfScreenDialog>
+
+<mp-halfScreenDialog  show="{{success_dialog}}" maskClosable="{{false}}" tips="辅助提示内容，可根据实际需要安排">
+	<view slot="desc" style="font-size:28rpx" class="flex_center">
+
+		<view>
+			<image class="success_icon" src="/resources/icon/success.png"></image>
+		</view>
+		<view style="color:#F04A4A;font-weight:bold">提现成功</view>
+		<view style="color: rgba(16, 16, 16, 0.5);margin-top:10rpx">将在24小时内发放到您的微信零钱</view>
+	</view>
+	<view slot="footer" bindtap="hidden_successDialog" class="cancel_btn">知道了</view>
+</mp-halfScreenDialog>

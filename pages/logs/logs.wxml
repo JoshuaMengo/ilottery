@@ -1,0 +1,31 @@
+<!--logs.wxml-->
+<view class="cu-card dynamic {{isCard?'no-card':''}}">
+  <view class="cu-item shadow" wx:for="{{report_list}}" wx:key="item">
+    <view class="cu-list menu-avatar">
+      <view class="cu-item">
+        <view class="cu-avatar round lg" style="background-image:url({{item.avatarUrl}});"></view>
+        <view class="content flex-sub">
+          <view>{{item.nickName}}</view>
+          <view class="text-gray text-sm flex justify-between">
+            {{item.create_time}}
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="text-content text-red" wx:if="{{item.lid}}" catchtap="enter_lottery" data-lid="{{item.lid}}">
+      (点击跳转)活动Id: {{item.lid}} 
+    </view>
+    <view class="text-content">
+      {{item.reason}} {{item.other_reason}}
+    </view>
+    <view class="grid flex-sub padding-lr {{isCard?'col-3 grid-square':'col-1'}}" wx:if="{{item.photos[0]}}">
+      <image class="bg-img {{isCard?'':'only-img'}}" src="{{item.photos[0]}}" mode="aspectFill" catchtap="preimg" data-idx="{{index}}">
+      </image>
+    </view>
+    <view class="text-red text-sm text-right padding">
+      <text wx:if="{{item.is_handle}}">已处理</text>
+      <text wx:if="{{!item.is_handle && !is_admin}}">未处理</text>
+      <text wx:if="{{!item.is_handle && is_admin}}" catchtap="handle" data-rid="{{item.rid}}">点击处理</text>
+    </view>
+  </view>
+</view>

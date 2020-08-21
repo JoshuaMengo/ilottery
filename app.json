@@ -1,0 +1,49 @@
+{
+   "pages": [
+      "pages/index/index",
+      "pages/logs/logs",
+      "pages/edit/edit",
+      "pages/lottery/lottery",
+      "pages/list/list",
+      "pages/jifen/jifen",
+      "pages/record/record",
+      "pages/admin/admin",
+      "pages/pointlog/pointlog",
+      "pages/turn/turn",
+      "pages/adv/adv",
+      "pages/luck/luck",
+      "pages/chat/chat",
+      "pages/webview/webview",
+      "pages/mine/mine",
+      "pages/help/help",
+      "pages/report/report",
+      "pages/comment/comment",
+      "pages/success/success",
+      "pages/manage/manage",
+      "pages/wallet/wallet",
+      "pages/cash_record/cash_record",
+      "pages/paper_edit/paper_edit"
+
+   ],
+   "window": {
+      "backgroundTextStyle": "light",
+      "navigationBarBackgroundColor": "#fff",
+      "navigationBarTitleText": "抽奖助手",
+      "navigationBarTextStyle": "black"
+   },
+   "navigateToMiniProgramAppIdList": [
+      "wxf7dde8538a11453f",
+      "wxe57d6c9f14ad1056"
+   ],
+   "requiredBackgroundModes": [
+      "audio"
+   ],
+   "style": "v2",
+   "sitemapLocation": "sitemap.json",
+   "networkTimeout": {
+      "request": 15000
+   },
+   "useExtendedLib": {
+      "weui": true
+   }
+}

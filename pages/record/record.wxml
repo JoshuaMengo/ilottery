@@ -1,0 +1,70 @@
+<!--pages/record/record.wxml-->
+<view class="join_view" wx:for="{{lottery_list}}" wx:key="item" catchtap="enter_lottery" data-lid="{{item.lid}}">
+  <view class="top">
+    <view>
+      <text class="cuIcon-title text-red"></text> {{item.is_end ? '已结束' : '进行中'}}  
+      <text style="color:#101010;font-size:26rpx;margin-left:20rpx">活动id: {{item.lid}}</text> 
+    </view>
+  </view>
+
+  <view class="top" style="margin-top:20rpx;">
+    <view style="color:#101010;" style="display:flex;align-items: center;">
+      <view style="width:50rpx;height:50rpx;" class="cu-avatar round" style="background-image:url({{item.avatarUrl || item.ads[0].img}});"></view>
+      <view style="margin-left:12rpx;">{{item.ads[0].name}} <text class="text-gray">发起</text> </view> 
+    </view>
+  </view>
+
+  <view class="mid">
+    <view wx:for="{{item.prizes}}" wx:for-item="p_item" wx:key="this">
+      {{p_item.name}} x{{p_item.num}} 份
+    </view> 
+  </view>
+
+  <view class="bottom">
+    <view wx:if="{{item.is_full}}">满{{item.full_num}}人自动开奖</view>
+    <view wx:if="{{item.is_countdown}}">{{item.start_time}}自动开奖</view>
+  </view>
+
+  <view class="hr"></view>
+
+  <view class="num" wx:if="{{status == '3'}}">
+    <view>您的中奖码:</view>
+    <view class="num_list">
+      <view wx:for="{{item.my_winning_code_list}}" wx:key="item">{{item}}</view>
+    </view>
+  </view>
+
+  <view class="admin">
+    <view>已有{{item.join_num}}人参与</view>
+    <!-- <view wx:if="{{status==2 && item.is_end}}">
+      <button  class="cu-btn bg-green" catchtap="export_data" data-lid="{{item.lid}}" style="width: 240rpx;">导出获奖名单</button>
+    </view> -->
+    <view class="action" wx:if="{{status==2}}">
+      <button class="cu-btn line-cyan text-cyan" catchtap="more" data-idx="{{index}}" data-lid="{{item.lid}}" style="width: 190rpx;margin-right:15rpx;">更多操作</button>
+    </view>
+  </view>
+
+  <view class="text-gray" style="margin-top:20rpx;font-size:24rpx;">创建发起时间：{{item.create_time || '2020-2-28 12:24'}}</view>
+</view>
+
+<view class="cu-modal {{modalName=='RadioModal'?'show':''}}" bindtap="hideModal" catchtouchmove="return">
+  <view class="cu-dialog" style="width:480rpx;">
+    <view class="cu-list menu text-left">
+      <view class="cu-item line-cyan text-cyan" style="text-align:center;">
+        <view class="flex-sub">活动id: {{lottery.lid}}的管理操作</view>
+      </view>
+
+      <view class="cu-item" catchtap="export_data" data-lid="{{lottery.lid}}">
+        <view class="flex-sub">导出名单</view>
+      </view>
+
+      <view class="cu-item" catchtap="enter_adv" data-lid="{{lottery.lid}}">
+        <view class="flex-sub">插入到推文</view>
+      </view>
+
+      <view class="cu-item" catchtap="delete_lottery" data-lid="{{lottery.lid}}">
+        <view class="flex-sub">删除该抽奖</view>
+      </view>
+    </view>
+  </view>
+</view>

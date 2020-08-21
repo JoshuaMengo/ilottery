@@ -1,0 +1,78 @@
+<!--pages/success/success.wxml-->
+<view style="background: #FBE9D1 100%;padding-top:190rpx;">
+	<view class="content">
+		<view class="Icon">
+			<image mode="aspectFill" src="/resources/icon/v2_qc0npm.png"></image>
+		</view>
+
+		<view style="display:flex;flex-direction: column;align-items:center;width:100%">
+			<view>- 您的抽奖码 -</view>
+			<view class="code code_container" style="display:flex">
+				<view wx:for="{{lottery_info.another_winning_code_list[0]}}" wx:key="index">
+					{{item}}
+				</view>
+			</view>
+
+			<view class='bottom_btn'>
+				<button class='confirm' catchtap="create_poster">
+					<image src="/resources/icon/poster.png"></image>助力海报
+				</button>
+				<button class='confirm' open-type="share">
+					<image src="/resources/icon/share.png"></image>好友助力
+				</button>
+			</view>
+
+			<view style="margin:30rpx 0 60rpx 0;color:rgba(0, 0, 0, 0.35)">
+				Tips：每个好友可帮您增加1个抽奖码，最多5个抽奖码
+			</view>
+
+			<view style="color:rgba(0, 0, 0, 0.35)" bindtap="goback">＜返回详情</view>
+		</view>
+	</view>
+</view>
+
+<view style="height:20rpx;background-color: rgba(244, 245, 245, 1);"></view>
+<view class="more_play_container"  wx:if="{{ adList.length > 0 }}">
+	<view class="tit">更多好玩</view>
+	<view style="padding:0 40rpx">
+		<view class="list" data-res="{{item}}" bindtap="enter_more" wx:for="{{ adList }}" wx:key="index">
+			<view class="list_img">
+				<image mode="aspectFill" src="{{ item.img }}"></image>
+			</view>
+			<view class="text_contaienr">
+				<view>{{ item.name }}</view>
+				<view>{{ item.introduce }}</view>
+			</view>
+		</view>
+	</view>
+</view>
+
+<view style="margin-bottom:100rpx;">
+	<view class="line_container">
+		<view class="text">推广</view>
+		<view class="line"></view>
+		<!-- <view style="clear:both"></view> -->
+	</view>
+	<view style="margin: 0 40rpx;">
+		<ad unit-id="adunit-cf039b4edc2049c4"></ad>
+	</view>
+	<view style="text-align:center;">
+		<text wx:if="{{uninterested == 0}}" data-value="0"  bindtap="changeInterested">不感兴趣</text>
+		<view wx:if="{{uninterested == 2}}" style="margin-top:24rpx;">已提交，您的反馈将帮助我们更好地提升产品体验</view>
+		<view wx:if="{{uninterested ==1}}" class="flex_align reason_container">
+			<text  data-value="1" bindtap="changeInterested">与我无关</text>
+			<text  data-value="1" bindtap="changeInterested">重复收到</text>
+			<text  data-value="1" bindtap="changeInterested">内容差</text>
+			<text  data-value="1" bindtap="changeInterested">其他</text>
+		</view>
+	</view>
+</view>
+
+<scroll-view scroll-y class="poster" wx:if="{{!poster_hidden}}" catchtap="hide_modal" catchtouchmove="preventTouchMove">
+	<view class="painter">
+		<painter style="width:710rpx;" palette="{{template}}" bind:imgOK="onImgOK" catchlongtap="saveImage" />
+	</view>
+	<view class="button_list">
+		<button catchtap="saveImage">保存海报</button>
+	</view>
+</scroll-view>

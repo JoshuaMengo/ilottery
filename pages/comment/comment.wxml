@@ -1,0 +1,51 @@
+<!--pages/comment/comment.wxml-->
+<comment is_admin="{{is_admin}}" comment_list="{{comment_list}}" examine="{{examine}}" lid="{{lid}}" bindshow_reply="show_reply" bindswitch_examine="switch_examine" bindshow_comment="show_comment"></comment>
+
+<view class="cu-modal {{modalName=='comment'?'show':''}}" catchtouchmove="cantmove">
+	<view class="cu-dialog" style="vertical-align:top;margin-top:40rpx;">
+		<view class="cu-bar bg-white justify-end">
+			<view class="content">活动留言</view>
+			<view class="action" bindtap="hideModal">
+				<text class="cuIcon-close text-red"></text>
+			</view>
+		</view>
+		<view class="padding-xl" hidden="{{modalName!='comment'}}">
+			<textarea placeholder="留言or评论" style="text-align:left;" bindinput="content_input" value="{{content}}"></textarea>
+			<button class="confirm" open-type='getUserInfo' bindgetuserinfo='onGotUserInfo' catchtap="send_comment" disabled="{{disabled}}">提交</button>
+		</view>
+	</view>
+</view>
+
+<view class="cu-modal {{modalName=='reply'?'show':''}}" catchtouchmove="cantmove">
+	<view class="cu-dialog" style="vertical-align:top;margin-top:40rpx;">
+		<view class="cu-bar bg-white justify-end">
+			<view class="content">留言回复</view>
+			<view class="action" bindtap="hideModal">
+				<text class="cuIcon-close text-red"></text>
+			</view>
+		</view>
+		<view class="padding-xl" hidden="{{modalName!='reply'}}">
+			<textarea placeholder="回复内容" style="text-align:left;" bindinput="reply_input" value="{{reply_content}}"></textarea>
+			<button class="confirm" open-type='getUserInfo' bindgetuserinfo='onGotUserInfo' catchtap="send_reply" disabled="{{disabled}}">提交</button>
+		</view>
+	</view>
+</view>
+
+<view>
+	<ad unit-id="adunit-cf039b4edc2049c4"></ad>
+</view>
+<view style="text-align:center;">
+	<view style="padding-bottom:24rpx;" wx:if="{{uninterested == 0}}" data-value="0"  bindtap="changeInterested">不感兴趣</view>
+	<text wx:if="{{uninterested == 2}}" style="margin-top:24rpx;">已提交，您的反馈将帮助我们更好地提升产品体验</text>
+
+	<view wx:if="{{uninterested ==1}}" class="flex_align reason_container">
+		<text  data-value="1"
+        bindtap="changeInterested">与我无关</text>
+		  <text  data-value="1"
+        bindtap="changeInterested">重复收到</text>
+		  <text  data-value="1"
+        bindtap="changeInterested">内容差</text>
+		  <text  data-value="1"
+        bindtap="changeInterested">其他</text>
+	</view>
+</view>

@@ -1,0 +1,15 @@
+<view class="cu-list menu {{menuBorder?'sm-border':''}} {{menuCard?'card-menu margin-top':''}}">
+  <view class="cu-item {{menuArrow?'arrow':''}}" wx:for="{{point_log}}" wx:key="item">
+    <view class="action">
+      <text class="text-grey">{{item.text}}</text>
+    </view>
+
+    <view class="action">
+      <text class="text-grey">{{item.create_time}}</text>
+    </view>
+
+    <view class="action">
+      <view class="{{item.is_minus ? 'text-green' : 'text-red'}} ">{{item.is_minus ? '-' : '+'}} {{item.point}}</view>
+    </view>
+  </view>
+</view>

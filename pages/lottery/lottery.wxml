@@ -1,0 +1,506 @@
+<!--pages/lottery/lottery.wxml-->
+<scroll-view scroll-y class="poster" wx:if="{{!poster_hidden}}" catchtap="hide_modal" catchtouchmove="preventTouchMove">
+	<view class="painter">
+		<painter style="width:710rpx;" palette="{{template}}" bind:imgOK="onImgOK" catchlongtap="saveImage" />
+	</view>
+	<view class="button_list">
+		<button catchtap="saveImage">保存海报</button>
+	</view>
+</scroll-view>
+
+
+
+
+<view class="margin flex" style="height:100vh;" wx:if="{{show_loading}}">
+	<view class="bg-white flex-sub radius shadow-lg" style="line-height:100vh;">
+		<image src="/resources/new/loading2.gif" mode="aspectFit" class="gif-white response" style="height:320rpx"></image>
+	</view>
+</view>
+
+<block wx:if="{{!show_loading && !show_banner}}">
+	<view class="container" style="background-color: #fff;">
+		<view class="lottery_img">
+			<image wx:if="{{ lottery_info.is_pocket }}" src="{{lottery_info.prizes[0].photo }}" mode="aspectFill"></image>
+			<image wx:else src="{{lottery_info.photo || lottery_info.introduce_pic[0]}}" mode="aspectFill"></image>
+
+		</view>
+		<view wx:if="{{ lottery_info.is_pocket }}" style="text-align:center;font-size:36rpx;font-weight:bold">{{ lottery_info.prizes[0].total_fee/100 }}元现金红包 ×{{lottery_info.prizes[0].num}}人</view>
+
+		<view wx:else class="cu-form-group" style="flex-direction: column;align-items: flex-start;justify-content: center;line-height:55rpx;">
+			<view class="prize_item" wx:for="{{lottery_info.prizes}}" wx:key="item">
+				<text style="font-weight:bold;">{{item.level}}等奖</text>：{{item.name}} x {{item.num}}份
+			</view>
+		</view>
+
+		<view style="display:flex;align-items: center;justify-content: center;margin-bottom:20rpx;margin-top:30rpx;">
+			<view class="tip1">
+				<image src="/resources/svg/red_point.svg" class="{{lottery_info.is_end?'end':'ing'}}"></image> {{lottery_info.is_end?'已开奖':'进行中'}}
+			</view>
+
+			<view class="tip2" wx:if="{{lottery_info.is_full}}">满{{lottery_info.full_num}}人开奖</view>
+			<view class="tip2" wx:if="{{!lottery_info.is_full}}">{{lottery_info.start_time}}自动开奖</view>
+		</view>
+
+		<view class="cu-form-group margin-top" style="border-top: 1rpx solid #eeeeee;">
+			<view class="title flex" style="align-items: center;font-size:28rpx;font-weight:bold;margin-left:0rpx;max-width:400rpx;overflow: hidden;white-space: nowrap;">
+				<image src="/resources/new/sponsor.png" style="width:45rpx;height:45rpx;margin-right:10rpx;"></image> {{lottery_info.ads[0].name}} | 发起
+			</view>
+			<view style="margin-right:0rpx;">
+				<button class="cu-btn bg-black " style="width: 180rpx;padding:0;font-weight:400;font-size:26rpx;" open-type="contact" bindcontact="handleContact" send-message-title="发送小程序卡片获取抽奖方联系方式" send-message-img="{{lottery_info.phone}}" show-message-card="true" send-message-path="pages/lottery/lottery?lid={{lottery_info.lid}}">联系发起方</button>
+			</view>
+		</view>
+	</view>
+
+	<view class="container" style="padding:20rpx 0rpx;background-color: rgb(252, 243, 243);">
+		
+		<image src="/resources/new/66.png" style="width:70rpx;height:50rpx;margin-left:40rpx;margin-top:20rpx;margin-bottom:20rpx;"></image>
+		<view class="text_content">
+			<view class="desc_text">
+				<text>{{lottery_info.introduce_content}}</text>
+			</view>
+			<image wx:for="{{lottery_info.introduce_pic}}" wx:key="item" src="{{item}}" mode="widthFix" bindtap="preview" data-idx="{{index}}" show-menu-by-longpress="true"></image>
+		</view>
+		<view wx:if="{{lottery_info.ads[0].wechat}}" class="cu-form-group margin-top" style="border-top: 1rpx solid #eeeeee;width:92%;margin:0 auto;padding:30rpx 30rpx;">
+			<view class="title flex" style="align-items: center;font-size:28rpx;font-weight:bold;margin-left:20rpx;max-width:400rpx;overflow: hidden;white-space: nowrap;">
+				{{lottery_info.ads[0].name}} | 发起
+			</view>
+			
+		</view>
+	</view>
+
+	<view class="container" style="padding-bottom:40rpx;{{!lottery_info.has_join && !lottery_info.is_end?'padding-top:20rpx;':''}}">
+		<block wx:if="{{!lottery_info.is_end}}">
+			<view class="join" wx:if="{{!lottery_info.has_join && !is_auth}}">
+				<span class="animate-radius"></span>
+				<button style="color: #fff;font-size: 28rpx;flex-direction: column;background-color: #C83636;padding:0rpx;width:auto;" open-type='getUserInfo' bindgetuserinfo='onGotUserInfo' catchtap="dingyue">
+					<view>参与</view>
+					<view>抽奖</view>
+				</button>
+			</view>
+
+			<view class="join" wx:if="{{!lottery_info.has_join && is_auth && lottery_info.need_phone && !hasPhone}}">
+				<span class="animate-radius"></span>
+				<button style="color: #fff;font-size: 28rpx;flex-direction: column;background-color: #C83636;padding:0rpx;width:auto;" open-type='getPhoneNumber' bindgetphonenumber="getPhoneNumber" form-type='submit'>
+					<view>参与</view>
+					<view>抽奖</view>
+				</button>
+			</view>
+
+			<view class="join" bindtap="join_lottery" wx:if="{{!lottery_info.has_join && is_auth && !lottery_info.need_phone}}">
+				<span class="animate-radius"></span>
+				<button style="color: #fff;font-size: 28rpx;flex-direction: column;background-color: #C83636;padding:0rpx;width:auto;">
+					<view>参与</view>
+					<view>抽奖</view>
+				</button>
+			</view>
+			<view class="join" bindtap="join_lottery" wx:if="{{!lottery_info.has_join && is_auth && lottery_info.need_phone && hasPhone}}">
+				<span class="animate-radius"></span>
+				<button style="color: #fff;font-size: 28rpx;flex-direction: column;background-color: #C83636;padding:0rpx;width:auto;">
+					<view>参与</view>
+					<view>抽奖</view>
+				</button>
+			</view>
+		</block>
+
+
+		<view wx:if="{{lottery_info.is_pocket &&  lottery_info.is_end }}" style="padding:40rpx 40rpx 20rpx 40rpx">
+			<view class="luck_draw_text">{{lottery_info.is_end ? '已开奖' : '进行中'}}</view>
+			<view class="luck_draw_desc">{{ lottery_info.prizes[0].total_fee / 100 }}元现金红包 ×{{lottery_info.prizes[0].num}}份</view>
+			<view class="luck_draw_desc2">满{{ lottery_info.full_num }}人 自动开奖</view>
+			<view class="red_paper_container flex_between flex_end">
+				<view class="text_content">
+					<view>{{ lottery_info.prizes[0].total_fee / 100 }}元现金红包 ×{{lottery_info.prizes[0].num}}份</view>
+					<view>{{ lottery_info.prizes[0].is_random ? '拼手气红包' : '普通红包'}}</view>
+				</view>
+				<view style="height:200rpx;width:300rpx" wx:if="{{!lottery_info.is_end}}">
+					<image mode="aspectFill" src="/resources/icon/red_paper.png" style="height:200rpx;width:300rpx"></image>
+				</view>
+				<view wx:if="{{lottery_info.is_end}}" style="height:200rpx;width:300rpx;position:relative">
+					<image mode="aspectFill" src="/resources/icon/paper_open.png" style="height:200rpx;width:300rpx"></image>
+					<view class="paper_open_text" style="{{ result_info.is_win ? 'color: rgba(211, 40, 40, 1);' : 'color: rgba(16, 16, 16, 0.5);' }}">
+						<view>{{result_info.is_win?'中奖啦' :'未中奖'}}</view>
+						<view wx:if="{{result_info.is_win}}">￥{{result_info.fee/100}}</view>
+					</view>
+				</view>
+			</view>
+		</view>
+
+		<view class="padding20">
+			<view wx:if="{{lottery_info.is_pocket && lottery_info.is_end && !result_info.is_win}}">
+				<view class="lose_text">很遗憾，大奖与你擦肩而过</view>
+				<view class="code_desc">感谢参与，您的抽奖码</view>
+			</view>
+
+			<view class="winning_text_container" wx:if="{{ lottery_info.is_pocket && lottery_info.is_end && result_info.is_win}}">
+				<view>恭喜，您中奖了！</view>
+				<view>奖品：现金{{result_info.fee /100}}元</view>
+				<view>已存入余额，可前往 我的-钱包 中提现</view>
+				<view>您的中奖码：</view>
+			</view>
+			<view wx:if="{{lottery_info.is_pocket && lottery_info.is_end}}" class="luck_draw_code">
+				<view wx:for="{{lottery_info.another_winning_code_list[0]}}" class="code_item" wx:key="index">
+					{{item}}
+				</view>
+			</view>
+		</view>
+
+
+		<block wx:if="{{!lottery_info.is_end && lottery_info.has_join }}">
+			<view class="cu-bar bg-white" wx:if="{{lottery_info.has_join}}">
+				<view class="action">
+					<text class="cuIcon-title text-red"></text>
+					<text class="text-red">已参与，您的抽奖码</text>
+				</view>
+			</view>
+
+			<view class="text-center" style="margin-top:20rpx;" wx:if="{{ lottery_info.has_join}}">
+				<view style="margin-bottom:20rpx;" class="num_list" wx:for="{{lottery_info.another_winning_code_list}}" wx:key="item">
+					<view wx:for="{{item}}" wx:for-item="code" wx:key="code">{{code}}</view>
+				</view>
+			</view>
+
+			<block wx:if="{{!lottery_info.forbid_share}}">
+				<view class='bottom_btn' wx:if="{{lottery_info.winning_code_list.length>0}}">
+					<button class='confirm' catchtap="create_poster">
+						<image src="/resources/icon/poster.png"></image>助力海报
+					</button>
+					<button class='confirm' open-type="share">
+						<image src="/resources/icon/share.png"></image>好友助力
+					</button>
+				</view>
+			</block>
+			<view class="share_tip" wx:if="{{ !lottery_info.forbid_share}}">Tips：每个好友点击可增加 1 个抽奖码，每个抽奖每人最多5个抽奖码</view>
+		</block>
+
+		<block wx:if="{{lottery_info.is_end}}">
+			<view class="cu-bar bg-white" wx:if="{{!lottery_info.is_pocket}}">
+				<view class="action">
+					<text class="cuIcon-title text-red"></text>
+					<text style="color:#C83636;">已开奖</text>
+					<text class="tip2" style="font-size:24rpx;color:rgba(34, 34, 34, 0.5);font-weight:bold;" wx:if="{{lottery_info.is_full}}">满{{lottery_info.full_num}}人开奖</text>
+					<text class="tip2" style="font-size:24rpx;color:rgba(34, 34, 34, 0.5);font-weight:bold;" wx:if="{{!lottery_info.is_full}}">{{lottery_info.start_time}}自动开奖</text>
+				</view>
+			</view>
+
+			<view class="cu-form-group" wx:if="{{!lottery_info.is_pocket}}" style="flex-direction: column;align-items: flex-start;justify-content: center;line-height:55rpx;">
+				<view class="prize_item" wx:for="{{lottery_info.prizes}}" wx:key="item">
+					<text style="font-weight:bold;">{{item.level}}等奖</text>：{{item.name}} x {{item.num}}份
+				</view>
+			</view>
+
+			<view class="show_gif" wx:if="{{!show_gif && !lottery_info.is_pocket }}">
+				<image class="gif" src="/resources/icon/kaijiang.gif"></image>
+				<button class='confirm' style="margin-top:20rpx;margin-bottom:20rpx;" catchtap="show_gif">查看中奖结果</button>
+			</view>
+
+			<view class="show_gif" wx:if="{{show_gif && lottery_info.is_win && !lottery_info.is_pocket}}">
+				<image class="gif" style="margin-top:40rpx;" src="/resources/icon/zhongjiang.gif"></image>
+				<block wx:if="{{show_result}}">
+					<view class="solid-bottom text-xl padding" style="margin-left:30rpx;">
+						<view class="text-bold" style="color:#C83636;">恭喜，你中奖了</view>
+						<view style="font-size:28rpx;color:#C83636;margin-top:30rpx;">奖品：{{result_info.my_winning_prize}}</view>
+					</view>
+					<view class="num_list">
+						<view wx:for="{{result_info.my_winning_code_list}}" wx:key="item">{{item}}</view>
+					</view>
+					<button class="confirm shadow" catchtap="get_addr" style="width:450rpx !important;margin-bottom:20rpx;background:#C83636;color:#fff;margin-top:40rpx;">
+						<image src="/resources/icon/location.png" style="width:48rpx;height:48rpx;"></image> 填写收货地址
+					</button>
+				</block>
+			</view>
+
+			<view class="show_gif" wx:if="{{show_gif && !lottery_info.is_win }}">
+				<image class="gif" style="margin-top:40rpx;" src="/resources/icon/meizhong.gif"></image>
+				<block wx:if="{{show_result}}">
+					<view class="solid-bottom text-xl padding" style="margin-left:30rpx;">
+						<text class="text-grey text-bold">很遗憾, 大奖与你擦肩而过</text>
+					</view>
+					<view class="share_tip" style="font-size:28rpx;" wx:if="{{lottery_info.has_join}}">感谢参与，您的抽奖码</view>
+					<view class="text-center" style="margin-top:20rpx;" wx:if="{{lottery_info.has_join}}">
+						<view style="margin-bottom:20rpx;" class="num_list" wx:for="{{lottery_info.another_winning_code_list}}" wx:key="item">
+							<view wx:for="{{item}}" wx:for-item="code" wx:key="code">{{code}}</view>
+						</view>
+					</view>
+				</block>
+			</view>
+		</block>
+
+		<block wx:if="{{!show_result }}">
+			<view class="tip2 flex" style="margin-left:0rpx;margin-top:40rpx;">
+				<text>- 已有 {{lottery_info.join_num}}人参与 -</text>
+			</view>
+
+			<view class="padding">
+				<view class="cu-avatar round lg margin-left margin-top" wx:for="{{lottery_info.joiner_list}}" wx:key="item" wx:for-index="idx" style="background-image:url({{item.avatarUrl || logo}});" wx:if="{{idx<28}}">
+				</view>
+			</view>
+		</block>
+		
+
+	</view>
+
+	
+
+
+	<view class="container" style="margin-top: 20rpx;padding-bottom:40rpx;padding-top:30rpx;" wx:if="{{ show_result || (lottery_info.is_pocket && lottery_info.is_end )}}">
+		<view class="tip2 flex" style="margin-left:0rpx;">
+			<text> 共 {{lottery_info.join_num}} 人参与了抽奖</text>
+		</view>
+
+		<view class="win_blokc">
+			<view class="win_top">- 中奖名单 -</view>
+			<view class="win_line" wx:for="{{result_info.winning_list}}" wx:key="item">
+				<view>
+					<image src="{{item.user.avatarUrl}}"></image> {{item.user.nickName}}
+				</view>
+				<view class="text-red">
+					中奖码：{{item.winning_code}}
+				</view>
+			</view>
+			<view class="win_line" catchtap="show_winner" style="border-bottom:none;justify-content: center;color:rgba(34, 34, 34, 0.5);font-size:24rpx;">查看完整名单></view>
+		</view>
+	</view>
+
+	<view class="container" style="margin-top: 20rpx;padding-bottom:60rpx;">
+		<view class="cu-form-group">
+			<view class="title text-bold">碰碰运气</view>
+			<view class="title-sm text-red" catchtap="enter_index">去首页参与更多 ></view>
+		</view>
+		<scroll-view scroll-x class="bg-white nav" style="padding-left:20rpx;">
+			<block wx:for="{{lottery_info.recommend_list}}" wx:key="item" wx:for-index="idx">
+				<view style="display: inline-block;width:80%;margin-right:20rpx;">
+					<view class="recommend" bindtap="enter_lottery" data-lid="{{item.lid}}">
+						<image src="{{item.photo}}" style="width:180rpx;height:160rpx;margin-right:25rpx;" mode="aspectFill"></image>
+						<view style="display: flex;flex:1;flex-direction: column;height:140rpx;justify-content: space-around;">
+							<view>
+								<view style="width:320rpx;overflow: hidden;">{{item.prizes[0].name}} x {{item.prizes[0].num}}份</view>
+							</view>
+							<view style="margin-top: 25rpx;">
+								<text class="text-cut text-time" wx:if="{{item.is_countdown}}">进行中 | {{item.start_time}}开奖</text>
+								<text class="text-cut text-time" wx:if="{{item.is_full}}">进行中 | 满{{item.full_num}}人自动开奖</text>
+							</view>
+						</view>
+					</view>
+				</view>
+			</block>
+		</scroll-view>
+	</view>
+
+	<!-- <view catchtap="enter_mini">
+    <image src="/resources/new/mini_banner.png" style="width:100%;" mode="widthFix"></image>
+  </view> -->
+
+	<ad unit-id="adunit-cf039b4edc2049c4"></ad>
+
+	<view class="share_tip" style="width:100%;color:#BF5959;text-align: center;margin-top:0rpx;margin-bottom:20rpx;padding-bottom:20rpx;padding-top:5rpx;background:#fff;color:#ccc;z-index:999!important">
+		<text catchtap="enter_report">投诉举报</text> | <text catchtap="show_state">免责声明</text>
+	</view>
+
+	<!-- <view class="hr"></view> -->
+
+	<comment is_admin="{{is_admin}}" comment_list="{{comment_list}}" examine="{{examine}}" lid="{{lottery_info.lid}}" bindshow_reply="show_reply" bindswitch_examine="switch_examine" bindshow_comment="show_comment"></comment>
+	<view class="cu-form-group" style="justify-content: center;margin-bottom:60rpx">
+		<navigator url="../comment/comment?lid={{lottery_info.lid}}" hover-class="none" class="text text-red">查看全部留言 ＞</navigator>
+	</view>
+
+	<button class="bot_btn bg-white" style="width:100% !important;"></button>
+</block>
+
+
+<view class="cu-modal {{modalName=='Image'?'show':''}}" catchtouchmove="cantmove">
+	<view class="cu-dialog">
+		<view class="bg-img" style="background-image: url('{{lottery_info.ads[0].img}}');height:300px;">
+			<view class="cu-bar justify-end text-white">
+				<view class="action" bindtap="hideModal">
+					<text class="cuIcon-close bg-black"></text>
+				</view>
+			</view>
+		</view>
+		<view class="cu-bar bg-cyan">
+			<view class="action margin-0 flex-sub solid-left" bindtap="hideModal">{{lottery_info.ads[0].name}}</view>
+		</view>
+	</view>
+</view>
+
+<!-- <view class="cu-modal {{modalName=='Join'?'show':''}}" catchtap="hideModal" > -->
+<view class="cu-modal {{modalName=='Join'?'show':''}}">
+
+	<view class="cu-dialog" style="background-color: rgba(255, 255, 255, 0);width:85%;">
+		<view class="bg-img" style="background-image: url('{{join_icon}}');width:100%;height:850rpx;background-color: rgba(255, 255, 255, 0);padding-top: 250rpx;">
+			<view class="join_tips">
+				<view>您的抽奖码</view>
+				<view>{{lottery_info.winning_code_list[0]}}</view>
+				<!-- <button class="cu-btn bg-red shadow" catchtap="hide_join_code" style="width: 180rpx;">确定</button> -->
+				<view style="margin-top: 30rpx;font-size:rgba(44, 44, 44, 0.35);font-size:24rpx;letter-spacing: 3rpx;">幸运币 +100， 剩余幸运币 {{user_info.reward_point}}</view>
+			</view>
+			<view class="tip3">
+				<view class="line1"></view>
+				<view>推广</view>
+				<view class="line1"></view>
+			</view>
+			<view>
+				<!-- <ad unit-id="adunit-cf039b4edc2049c4"></ad> -->
+			</view>
+			<view style="text-align:center;">
+				<text wx:if="{{uninterested == 0}}" data-value="0"  bindtap="changeInterested">不感兴趣</text>
+				<text wx:if="{{uninterested == 2}}">谢谢反馈</text>
+
+				<view wx:if="{{uninterested ==1}}" class="flex_align reason_container">
+					<text  data-value="1"
+        bindtap="changeInterested">原因</text>
+					<text>原因</text>
+					<text>原因</text>
+					<text>原因</text>
+				</view>
+			</view>
+			<!-- <image catchtap="enter_banner_dd" src="{{lottery_info.new_ad_dict.img}}" style="width:530rpx;height:276rpx;border-radius:10rpx;margin-top:20rpx;"></image> -->
+		</view>
+	</view>
+</view>
+
+<view class="cu-modal {{modalName=='DialogModal1'?'show':''}}" catchtouchmove="cantmove">
+	<view class="cu-dialog">
+		<view class="cu-bar bg-white justify-end">
+			<view class="content text-red">参与口令</view>
+			<view class="action" bindtap="hideModal">
+				<text class="cuIcon-close text-red"></text>
+			</view>
+		</view>
+		<view class="padding-xl">
+			<input maxlength="20" bindinput="command_input"></input>
+			<view class="text-gray" style="margin-top:20rpx;letter-spacing: 3rpx;">您需要输入正确口令可以参与抽奖</view>
+		</view>
+		<view class="cu-bar bg-white justify-end" style="display: flex;justify-content: space-around;">
+			<view class="action">
+				<button class="cu-btn" style="width:200rpx;border:1rpx solid #BF5959;color:#BF5959;background:#fff;" open-type="contact" bindcontact="handleContact" send-message-title="发送小程序卡片获取口令" send-message-img="{{lottery_info.phone}}" show-message-card="true" send-message-path="pages/lottery/lottery?lid={{lottery_info.lid}}">获取口令</button>
+			</view>
+
+			<view class="action">
+				<button class="cu-btn margin-left" style="background:#BF5959;color:#fff;width:200rpx;" catchtap="join_lottery">确定</button>
+			</view>
+		</view>
+	</view>
+</view>
+
+<view class="cu-modal {{lottery_info.is_hidden?'show':''}}" catchtouchmove="cantmove">
+	<view class="cu-dialog">
+		<view class="cu-bar bg-white justify-end">
+			<view class="content">活动已下架</view>
+		</view>
+		<view class="padding-xl" style="height:500rpx;">
+			<view style="letter-spacing: 4rpx;">该活动因被投诉过多，已下架</view>
+			<view catchtap="enter_index" class="confirm" style="width:350rpx !important;margin-top:100rpx;border-radius: 6rpx;">参与其他免费抽奖</view>
+		</view>
+	</view>
+</view>
+
+<view class="cu-modal {{modalName=='state'?'show':''}}" catchtouchmove="cantmove">
+	<view class="cu-dialog">
+		<view class="cu-bar bg-white justify-end">
+			<view class="content text-black" style="font-size:26rpx;">免责声明</view>
+			<view class="action" bindtap="hideModal">
+				<text class="cuIcon-close text-red"></text>
+			</view>
+		</view>
+		<view class="padding-xl" style="letter-spacing: 4rpx;text-align:left;">
+			<view>抽个奖助手作为提供发起及参与抽奖的平台，不对第三方发起人行为承担责任，活动奖品均由发起者提供并发放；</view>
+			<view style="margin-top:20rpx;margin-bottom:20rpx;">抽个奖助手会在法律范围内尽可能地规范、督促用户遵守相关法律和平台使用规则，营造良好的平台使用环境，感谢支持。</view>
+		</view>
+	</view>
+</view>
+
+<view class="cu-modal {{modalName=='comment'?'show':''}}" catchtouchmove="cantmove">
+	<view class="cu-dialog" style="vertical-align:top;margin-top:40rpx;">
+		<view class="cu-bar bg-white justify-end">
+			<view class="content">活动留言</view>
+			<view class="action" bindtap="hideModal">
+				<text class="cuIcon-close text-red"></text>
+			</view>
+		</view>
+		<view class="padding-xl" hidden="{{modalName!='comment'}}">
+			<textarea placeholder="留言or评论" style="text-align:left;" bindinput="content_input" value="{{content}}"></textarea>
+			<button class="confirm" open-type='getUserInfo' bindgetuserinfo='onGotUserInfo' catchtap="send_comment" disabled="{{disabled}}">提交</button>
+		</view>
+	</view>
+</view>
+
+<view class="cu-modal {{modalName=='reply'?'show':''}}" catchtouchmove="cantmove">
+	<view class="cu-dialog" style="vertical-align:top;margin-top:40rpx;">
+		<view class="cu-bar bg-white justify-end">
+			<view class="content">留言回复</view>
+			<view class="action" bindtap="hideModal">
+				<text class="cuIcon-close text-red"></text>
+			</view>
+		</view>
+		<view class="padding-xl" hidden="{{modalName!='reply'}}">
+			<textarea placeholder="回复内容" style="text-align:left;" bindinput="reply_input" value="{{reply_content}}"></textarea>
+			<button class="confirm" open-type='getUserInfo' bindgetuserinfo='onGotUserInfo' catchtap="send_reply" disabled="{{disabled}}">提交</button>
+		</view>
+	</view>
+</view>
+
+<view class="cu-modal {{modalName=='lucky'?'show':''}}" catchtouchmove="cantmove">
+	<view class="cu-dialog {{front?'front':''}}" style="height:800rpx;width:600rpx;border-radius:35rpx;" catchtap="show_front">
+		<block wx:if="{{!show_front}}">
+			<image src="/resources/new/fan.png" style="width:100%;height:100%;padding:20rpx;background:rgba(249, 226, 194, 0.65);"></image>
+		</block>
+
+		<block wx:if="{{show_front}}">
+			<view class="cu-bar" style="min-height:0rpx;justify-content: flex-end;">
+				<image src="/resources/new/error.png" class="lucky_close" catchtap="hide_lucky"></image>
+			</view>
+			<image src="/resources/new/yeah.png" style="width:210rpx;height:152rpx;"></image>
+			<view style="margin-top:20rpx;color:rgba(16, 16, 16, 0.5);font-size:32rpx;">WOW! 翻到了</view>
+			<view style="margin-top:20rpx;color:#C83636;font-size:30rpx;letter-spacing: 4rpx;font-weight:bold;">{{lottery_info.ad_dict.introduce}}</view>
+			<view style="margin: 30rpx auto;font-size:24rpx;color:rgba(16, 16, 16, 0.25);">00:{{countdown_min}}:{{countdown_sec}} 后失效</view>
+			<image src="{{lottery_info.ad_dict.img}}" style="width:552rpx;height:330rpx;" catchtap="enter_ad"></image>
+		</block>
+	</view>
+</view>
+
+<view class="cu-modal {{modalName=='zanzhu'?'show':''}}" catchtouchmove="cantmove">
+	<view class="cu-dialog {{front?'front':''}}" style="height:800rpx;width:600rpx;border-radius:35rpx;" catchtap="show_front">
+		<view class="cu-bar" style="min-height:0rpx;justify-content: flex-end;">
+			<image src="/resources/new/error.png" class="lucky_close" catchtap="hide_lucky"></image>
+		</view>
+		<image src="/resources/new/dd_zanzhu.png" style="width:100rpx;height:100rpx;"></image>
+		<view style="margin-top:20rpx;color:#D32828;font-size:40rpx;">当当网 特别赞助</view>
+		<view style="width:60%;margin:0 auto;margin-top:30rpx;color:#3D3D3D;font-size:28rpx;letter-spacing: 4rpx;font-weight:bold;">跳转至赞助商指定页面后返回本页，即可成功参与</view>
+		<button class="confirm" style="margin-top:80rpx;" catchtap="enter_dd">跳转</button>
+		<view class="padding" style="text-align:left;margin-top:30rpx;font-size:24rpx;color:rgba(61, 61, 61, 0.5);letter-spacing: 3rpx;line-height:45rpx;">
+			<view>赞助型抽奖说明：</view>
+			<view>1、由赞助商赞助奖品的抽奖活动</view>
+			<view>2、抽奖不增加加幸运币</view>
+			<view>3、跳转赞助商指定页面才能火男获得抽奖资格</view>
+		</view>
+	</view>
+</view>
+
+
+<mp-halfScreenDialog bindbuttontap="buttontap" show="{{Withdrawal_dialog}}" closabled="{{false}}" tips="辅助提示内容，可根据实际需要安排">
+	<view slot="desc" class="desc_container" style="font-size:28rpx">
+		<view class="desc_item" catchtap="close_dialog" data-type="1">
+			<image src="/resources/icon/poster_icon.png"></image>
+			<view>海报</view>
+		</view>
+
+		<view class="desc_item">
+			<button open-type="share" bindtap="close_dialog"  data-type="2">
+				<image src="/resources/icon/forward_icon.png"></image>
+			</button>
+			<view>转发</view>
+		</view>
+
+		<view class="desc_item" bindtap="enter_dev">
+			<image src="/resources/icon/link_icon.png"></image>
+			<view>插入到推文</view>
+		</view>
+
+	</view>
+
+</mp-halfScreenDialog>
+
+<view class="btn_container">
+	<view class="btn_item" bindtap="enter_index">更多抽奖</view>
+	<view class="btn_item bg_red" bindtap="show_dialog">分享抽奖</view>
+</view>

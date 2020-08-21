@@ -1,0 +1,25 @@
+/* pages/list/list.wxss */
+@import "/colorui/main.wxss";
+@import "/colorui/icon.wxss";
+
+page{
+  padding-bottom: 40rpx;
+}
+
+button:not([size='mini']){
+  width: auto;
+  min-height: auto;
+}
+
+.cu-item{
+  padding: 0rpx 0rpx !important;
+}
+
+.prize{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 350rpx;
+  margin-right: 15rpx;
+  font-size: 26rpx;
+}

@@ -1,0 +1,111 @@
+/* pages/wallet/wallet.wxss */
+page{
+   background-color: white;
+}
+.container {
+   background: #F04A4A;
+   padding: 50rpx 40rpx 60rpx;
+}
+
+.icon_container {
+   display: flex;
+   align-items: center;
+   color: white;
+   font-size: 36rpx;
+   font-weight: bold;
+}
+
+.icon_container image {
+   height: 50rpx;
+   width: 50rpx;
+   margin-right: 10rpx;
+}
+
+.content {
+   border-radius: 10px;
+   background-color: white;
+   margin: 50rpx 0 0;
+}
+
+.flex_bewteen {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+
+.padding20 {
+   padding: 0 40rpx;
+}
+
+.content_btm {
+   height: 208rpx;
+}
+
+.content_btm .num {
+   font-size: 72rpx;
+   font-weight: bold;
+}
+
+.content_btm .btn {
+   color: #F04A4A;
+   border: 1px solid rgba(240, 74, 74, 1);
+   border-radius: 5px;
+   padding: 8rpx 30rpx;
+}
+
+.dialog_desc {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+
+.dialog_desc .Withdrawal_btn {
+   background-color: #F04A4A;
+   color: white;
+   height: 80rpx;
+   width: 144rpx;
+   border-radius: 5px;
+   padding: 0 !important;
+   margin: 0 !important;
+   line-height: 80rpx !important;
+   font-weight: normal !important;
+}
+
+.dialog_tips {
+   margin-top: 30rpx;
+   color: rgba(16, 16, 16, 0.5);
+}
+
+.flex_center {
+   display: flex;
+   justify-content: center;
+   flex-direction: column;
+}
+
+.flex_center view {
+   margin: 0 auto;
+}
+
+.cancel_btn {
+   /* width: 210rpx;
+   height: 80rpx; */
+   display: inline-block;
+   padding: 14rpx 42rpx;
+   border-radius: 5px;
+   background-color: rgba(244, 245, 245, 1);
+   color: rgba(16, 16, 16, 0.5);
+   font-size: 28rpx;
+}
+
+.success_icon {
+   height: 110rpx;
+   width: 110rpx;
+   margin-bottom: 30rpx;
+}
+.receive_cash{
+   padding:30rpx 40rpx;
+   border-bottom: 1px solid rgba(244, 245, 245, 1);
+}
+.weui-icon-btn_more{
+   opacity: 0;
+}

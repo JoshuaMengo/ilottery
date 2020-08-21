@@ -1,0 +1,57 @@
+<!--pages/manage/manage.wxml-->
+<view class="page">
+	<view class="page__bd">
+		<mp-cells>
+			<mp-cell>
+				<mp-uploader bindfail="uploadError" bindsuccess="uploadSuccess" select="{{selectFile}}" upload="{{uplaodFile}}" files="{{files}}" max-count="1" title="{{cell_tit}}" tips="图片上传提示"></mp-uploader>
+			</mp-cell>
+		</mp-cells>
+	</view>
+
+	<mp-cells>
+		<mp-cell prop="qq1" title="appid" ext-class="">
+			<input bindinput="formInputChange" class="weui-input" bindinput="setAppid" style="padding-left:15rpx" placeholder="请输入appid" />
+		</mp-cell>
+		<view wx:if="{{ manage_type == 'ad' }}">
+			<mp-cell prop="qq" title="pageUrl" ext-class="">
+				<input bindinput="formInputChange" class="weui-input" style="padding-left:15rpx" bindinput="setPageUrl" placeholder="请输入pageUrl" />
+			</mp-cell>
+			<mp-cell prop="qq" title="name" ext-class="">
+				<input bindinput="formInputChange" class="weui-input" style="padding-left:15rpx" bindinput="setName" placeholder="请输入pageUrl" />
+			</mp-cell>
+			<mp-cell prop="qq" title="introduce" ext-class="">
+				<input bindinput="formInputChange" class="weui-input" style="padding-left:15rpx" bindinput="setIntroduce" placeholder="请输入pageUrl" />
+			</mp-cell>
+		</view>
+
+		<view wx:else>
+			<mp-cell prop="qq" title="path" ext-class="">
+				<input bindinput="formInputChange" class="weui-input" style="padding-left:15rpx" bindinput="setPath" placeholder="请输入path" />
+			</mp-cell>
+		</view>
+
+	</mp-cells>
+	<view style="background:white;padding:20rpx 0">
+		<button bindtap="submit_banner" type="primary">提交</button>
+	</view>
+
+
+	<view class="ad_contaienr">
+		<mp-cells title="{{cell_tit_btm}}" footer="底部说明文字底部说明文字">
+			<checkbox-group bindchange="checkboxChange">
+				<label class="weui-cell weui-check__label flex_align " wx:for="{{bannerList || adList}}" wx:key="{{item.value}}">
+					<view class="weui-cell__hd mar_right20">
+						<checkbox value="{{ manage_type == 'ad' ? item.aid : item.bid }}" checked="{{item.checked}}" />
+					</view>
+					<view class="banner_container">
+						<image mode="aspectFill" src="{{ item.img }}"></image>
+					</view>
+				</label>
+			</checkbox-group>
+		</mp-cells>
+	</view>
+	<view style="padding:20rpx 0">
+		<button bindtap="delete_btn" style="background:#e64340;color:white">删除</button>
+	</view>
+
+</view>

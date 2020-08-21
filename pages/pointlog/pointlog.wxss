@@ -1,0 +1,11 @@
+/* pages/pointlog/pointlog.wxss */
+@import "/colorui/main.wxss";
+@import "/colorui/icon.wxss";
+
+
+.cu-list{
+  width: 95%;
+  margin: 0 auto;
+  margin-top: 30rpx;
+  border-radius: 12rpx;
+}

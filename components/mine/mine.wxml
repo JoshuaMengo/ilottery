@@ -1,0 +1,108 @@
+<!--pages/mine/mine.wxml-->
+<view class="userInfo">
+  <block wx:if="{{user_info.avatarUrl}}">
+    <image src="{{user_info.avatarUrl}}" class="ava"></image>
+    <view class="nickName">
+      <view>{{user_info.nickName}}</view>
+      <view style="font-weight:500;font-size:24rpx;">uid: {{my_uid}}</view>
+    </view>
+  </block>
+  
+  <block wx:else>
+    <open-data type="userAvatarUrl" class="ava"></open-data>
+    <view>
+      <open-data type="userNickName" class="nickName"></open-data>
+      <view style="font-weight:500;font-size:24rpx;">uid: {{my_uid}}</view>
+    </view>
+  </block>
+</view>
+
+<scroll-view scroll-y class="scrollPage">
+  <view class="padding flex text-center text-grey bg-white shadow-warp">
+    <view class="flex flex-sub flex-direction solid-right" catchtap="enter_record" data-status="1">
+      <view class="text-xl text-red">{{user_info.join_count}}</view>
+      <view class="margin-top-sm">
+         参与</view>
+    </view>
+    
+    <view class="flex flex-sub flex-direction" catchtap="enter_record" data-status="2">
+      <view class="text-xl text-red">{{user_info.create_count}}</view>
+      <view class="margin-top-sm">
+         发起
+      </view>
+    </view>
+
+    <view class="flex flex-sub flex-direction" catchtap="enter_record" data-status="3">
+      <view class="text-xl text-red">{{user_info.draw_count}}</view>
+      <view class="margin-top-sm">
+         中奖
+      </view>
+    </view>
+  </view>
+
+
+  <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
+    <view wx:if="{{!is_close}}" class="cu-item arrow" >
+      <navigator class="content"  url="../../pages/wallet/wallet" hover-class="none" >
+        <image src="/resources/icon/wallet_icon.png"></image>
+        <text class="text-black">钱包</text>
+      </navigator>
+    </view>
+    
+    <view class="cu-item arrow">
+      <navigator class="content" hover-class="none" catchtap="enter_market">
+        <image src="/resources/svg/jifen.svg"></image>
+        <text class="text-black">积分集市</text>
+      </navigator>
+    </view>
+
+    <view class="cu-item arrow">
+      <navigator class="content" hover-class="none" catchtap="get_addr">
+        <image src="/resources/svg/jifen.svg"></image>
+        <text class="text-black">我的收货地址</text>
+      </navigator>
+    </view>
+
+    <view class="cu-item arrow" wx:if="{{is_admin}}">
+      <navigator class="content" url="../admin/admin" hover-class="none">
+        <image src="/resources/svg/manage.svg"></image>
+        <text class="text-black">抽奖管理</text>
+      </navigator>
+    </view>
+
+    <view class="cu-item arrow" catchtap="wxpay">
+      <button open-type="contact" bindcontact="handleContact" send-message-title="发送小程序卡片合作联系方式" send-message-img="{{qr_code}}" show-message-card="true" send-message-path="pages/index/index" class="content">
+        <image src="/resources/svg/hezuo.svg"></image>
+        <text class="text-black">合作推广</text>
+      </button>
+    </view>
+
+    <view class="cu-item arrow">
+      <navigator class="content" url="../report/report" hover-class="none">
+        <image src="/resources/svg/hezuo.svg"></image>
+        <text class="text-black">反馈与投诉</text>
+      </navigator>
+    </view>
+
+    <view class="cu-item arrow" wx:if="{{is_admin}}">
+      <navigator class="content" url="../manage/manage?type=banner" hover-class="none">
+        <image src="/resources/svg/hezuo.svg"></image>
+        <text class="text-black">banner图管理</text>
+      </navigator>
+    </view>
+
+    <view class="cu-item arrow" wx:if="{{is_admin}}">
+      <navigator class="content" url="../manage/manage?type=ad" hover-class="none">
+        <image src="/resources/svg/hezuo.svg"></image>
+        <text class="text-black">广告管理</text>
+      </navigator>
+    </view>
+
+    <!-- <view class="cu-item arrow" wx:if="{{is_admin}}" catchtap="dingyue">
+      <view class="content">
+        <image src="/resources/svg/hezuo.svg"></image>
+        <text class="text-black">订阅消息</text>
+      </view>
+    </view> -->
+  </view>
+</scroll-view>

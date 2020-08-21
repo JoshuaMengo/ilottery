@@ -1,0 +1,71 @@
+<view class="margin flex" style="height:100vh;" wx:if="{{show_loading}}">
+  <view class="bg-white flex-sub radius shadow-lg" style="line-height:100vh;">
+    <image src="https://image.weilanwl.com/gif/loading-white.gif" mode="aspectFit" class="gif-white response" style="height:320rpx"></image>
+  </view>
+</view>
+
+
+<view class="bg">
+  <image src="{{user_info.avatarUrl}}" class="ava"></image>
+  <view style="color:#fff;margin-top:40rpx;margin-bottom:70rpx;">我参与了抽奖，帮我助力</view>
+</view>
+
+<view class="container" style="height:600rpx;">
+  <view class="recommend" bindtap="enter_lottery" data-lid="{{lottery_info.lid}}">
+    <image src="{{lottery_info.photo}}" style="width:180rpx;height:160rpx;margin-right:25rpx;" mode="aspectFill"></image>
+    <view class="text-desc" style="display: flex;flex-direction: column;width:75%;height:140rpx;margin-bottom:0rpx;justify-content: space-around;"> 
+      <view>
+        <view>{{lottery_info.prizes[0].name}} x {{lottery_info.prizes[0].num}}份</view>
+        <!-- <view wx:for="{{lottery_info.prizes}}" wx:for-lottery_info="p_lottery_info" wx:key="p_lottery_info" wx:for-index="idx" wx:if="{{idx<2}}">{{p_lottery_info.name}} x {{p_lottery_info.num}}份</view> -->
+      </view>
+
+      <view style="margin-top: 25rpx;">
+        <text class="text-cut text-time" wx:if="{{lottery_info.is_countdown}}"><text style="color:#C83737;">进行中</text> | {{lottery_info.start_time}}开奖</text>
+        <text class="text-cut text-time" wx:if="{{lottery_info.is_full}}"><text style="color:#C83737;">进行中</text> | 满{{lottery_info.full_num}}人自动开奖</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- <view class="hr"></view> -->
+
+  <view class="join" bindtap="help">
+    <span class="animate-radius"></span>
+    <button style="color: #fff;font-size: 28rpx;flex-direction: column;background-color: #C83636;padding:0rpx;width:auto;" open-type='getUserInfo' bindgetuserinfo='onGotUserInfo'>
+      <view style="letter-spacing: 4rpx;">帮ta</view>
+      <view style="letter-spacing: 4rpx;">助力</view>
+    </button>  
+  </view>
+</view>
+
+<view style="color:#fff;margin-top:40rpx;margin-bottom:40rpx;text-align:center;">------------- 更多抽奖推荐 -------------</view>
+
+<block wx:for="{{lottery_list}}" wx:key="item" wx:for-index="idx">
+  <view class="cu-card case {{isCard?'no-card':''}}" bindtap="enter_lottery" data-lid="{{item.lid}}">
+    <view class="cu-item shadow" style="margin:20rpx 30rpx;">
+      <view class="image">
+        <image src="{{item.photo || item.introduce_pic[0]}}" mode="aspectFill"></image>
+        <view class="cu-tag bg-blue">免费抽奖</view>
+        <view class="cu-bar bg-shadeBottom">
+          <text class="text-cut" wx:if="{{item.is_countdown}}">进行中 | {{item.start_time}}开奖</text>
+          <text class="text-cut" wx:if="{{item.is_full}}">进行中 | 满{{item.full_num}}人自动开奖</text>
+        </view>
+      </view>
+      <view class="cu-list menu-avatar">
+        <view class="cu-item">
+          <!-- <view style="width:50rpx;height:50rpx;" class="cu-avatar round" style="background-image:url({{item.avatarUrl || logo}});"></view> -->
+          <view class="content flex-sub">
+            {{item.ads[0].name}} | <text style="color:#101010;">发起</text> 
+          </view>
+        </view>
+
+        <view class="text-desc" style="flex-direction: column;">
+          <text wx:for="{{item.prizes}}" wx:for-item="p_item" wx:key="p_item">{{p_item.level}}等奖：{{p_item.name}} x {{p_item.num}}份</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</block>
+
+
+
+
